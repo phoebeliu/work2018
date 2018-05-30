@@ -52,19 +52,34 @@
 //         exist[nums[i]] = i;
 //     }
 //   };
+
+// var twoSum = function(nums, target) {
+//     var result = [];
+//     nums.forEach(function(num, i) {
+//       var diff = target - num;
+//       var k = nums.indexOf(diff);
+//       if (k > -1 && k !== i) {
+//          result[0] = i;
+//          result[1] = k;
+//          return true;
+//       };
+//     })
+//     return result;
+//   }
+
 var twoSum = function(nums, target) {
-    var result = [];
-    nums.forEach(function(num, i) {
-      var diff = target - num;
-      var k = nums.indexOf(diff);
-      if (k > -1 && k !== i) {
-         result[0] = i;
-         result[1] = k;
-         return true;
-      };
-    })
-    return result;
-  }
+    var i,j,results;
+    results = [];
+    for(j=0;j < nums.length;j++){
+        var key = nums.indexOf(target - nums[j]);
+        if(key!==j && key>-1){
+            results.push(key);
+            results.push(j);
+            return results;
+        };
+    };
+};
+
 var nums = [2, 7, 11, 15],
      target = 9;
 console.log(twoSum(nums, target));
