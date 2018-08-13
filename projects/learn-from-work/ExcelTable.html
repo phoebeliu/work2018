@@ -1,0 +1,38 @@
+<div class="wrap">
+    <table class=" table--replace" ng-if="!listView">
+        <thead>
+            <tr class="thead-filter">
+                <th ng-repeat="column in columns">
+                    <span ng-bind-html="column.title" ng-init="sorterType = true" ng-click="sorterType = !sorterType;sortByColumn(sorterType,column.id)" ng-if="column.sortable"></span>
+                    <span class="table-column-title" ng-bind-html="column.title" ng-if="!column.sortable"></span>
+                    <div class="dropdown icon-filter" style="float: right" ng-if="column.filter != 'none'">
+                        <div class="dropdown-toggle filter-button" data-toggle="dropdown"><i class="fa fa-filter"></i></div>
+                        <div class="dropdown-menu filter-list">
+                            <ul style="list-style-type: none; padding: 0">
+                                <li>
+                                    <input type="checkbox" id="{{column.id}}all" ng-model="column.checked" ng-click="markAll(column.id,!(column.checked))" />&nbsp;<label for="{{column.id}}all">Select All</label>
+                                </li>
+                                <li ng-repeat="item in itemFilter(column.id)" ng-if="!listView">
+                                    <input id="{{column.id}}Option{{$index}}" type="checkbox" ng-model="item.checked" />&nbsp;<label for="{{column.id}}Option{{$index}}">{{item.name}}</label>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </th>
+                <th>
+                    <span class="table-column-title">ACTION</span>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="row in filteredList | filter: rowFilter | orderBy:sorterFunc | orderBy:sortorder">
+                <td ng-repeat="column in columns" data="{{column.id}}" attribute="{{column.id}}" class="{{column.class}}">{{row[column.id]}}</td>
+                <td attribute="action">
+                    <button class="btn-icon-button inline" ng-click="editFunc()"><i class="edit-icon" aria-hidden="true"></i></button>
+                    <button class="btn-icon-button inline" ng-click="deleteFunc()"><i class="remove-icon" aria-hidden="true"></i></button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <ng-transclude ng-show="listView"></ng-transclude>
+</div>

@@ -1,0 +1,14 @@
+<div class="small-10 medium-10 columns auto-complete-warp" ng-class="{'auto-complete-height':showAutoSuggestionList() && showAC == true && insideClose}">
+    <div ng-if="!showPureTextInputBox" class="control-group form-wrapper">
+
+        <textarea class="input-xxlarge" ng-model-options='{ debounce: 500 }' aria-label="{{placeholder}}" ng-change="onChange(inputCharacter.text)" id="class_code{{classCodeId}}" ng-model="inputCharacter.text" autocomplete="off"></textarea>
+
+    </div>
+
+    <md-input-container ng-if="showPureTextInputBox === true" class="md-block">
+        <textarea class="input-xxlarge" ng-model-options='{ debounce: 500 }' aria-label="{{placeholder}}" ng-change="onChange(inputCharacter.text)" ng-model="inputCharacter.text" ng-trim="true" ng-placeholder="{{placeholder}}" aria-label="{{placeholder}}" autocomplete="off"></textarea>
+    </md-input-container>
+    <div class="auto-complete" ng-if="showAutoSuggestionList() && showAC == true && insideClose" tabindex="-1" id="auto-complete">
+        <span md-highlight-text="inputCharacter.text" md-highlight-flags="gi" ng-click="clickOnSuggestionItem(item)" ng-repeat="item in autoSuggestionList | limitTo : 10" class="auto-complete-item">{{item.display}}</span>
+    </div>
+</div>
