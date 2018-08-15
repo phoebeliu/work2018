@@ -25,9 +25,9 @@ db.once('open',function(){
         //this = Animal
         return this.find({size:size},callback);
     };
-    AnimalSchema.methods.findColor = function(color,callback){
+    AnimalSchema.methods.findColor = function(callback){
         //this = document
-        return this.model('animal').find({color:color},callback);
+        return this.model('animal').find({color:this.color},callback);
     };
     var Animal = mongoose.model('animal',AnimalSchema);
     
@@ -36,7 +36,7 @@ db.once('open',function(){
         color: 'red'
     });
     var animalData = [{
-        type: 'ele',
+        type: 'sdada',
         color: 'red'
     },{
         type: 'tete',
@@ -44,6 +44,9 @@ db.once('open',function(){
     },{
         type: 'sgsgsg',
         color: 'blue'
+    },{
+        type: 'dog',
+        color: 'red'
     },elephant];
     // elephant.save(function(err){
     //     if(err){
@@ -67,13 +70,26 @@ db.once('open',function(){
                 // animals.forEach(function(animal){
                 //     console.log(animal.size);
                 // });
-                Animal.findSize('medium',function(err,animals){
-                    animals.forEach(function(animal){
-                        console.log(animal.size + ' '+animal.type);
-                    });
-                    db.close(function(){
-                        console.log('close');
-                    });
+
+                // Animal.findSize('medium',function(err,animals){
+                //     animals.forEach(function(animal){
+                //         console.log(animal.size + ' '+animal.type);
+                //     });
+                //     db.close(function(){
+                //         console.log('close');
+                //     });
+                // })
+
+                Animal.findOne({type:'ele'},function(err,elephant){
+                    elephant.findColor(function(err,animals){
+                        if(err)console.error('save error',err);
+                        animals.forEach(function(animal){
+                            console.log(animal.size + ' '+animal.type + ' ' +animal.color);
+                        });
+                        db.close(function(){
+                            console.log('close');
+                        });
+                    })
                 })
             };
             

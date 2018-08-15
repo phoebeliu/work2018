@@ -4,6 +4,7 @@ var app = express();
 var routers = require('./routers');
 var jsonParser =  require('body-parser').json;
 var logger = require('morgan');
+var mongoose = require('mongoose');
 
 var jsonCheck = function(req,res,next){
     if(req.body){
@@ -19,6 +20,25 @@ app.use(logger('dev'));
 //app.use(jsonCheck);
 app.use(jsonParser());
 //app.use(jsonCheck);
+
+app.use(function(req,res,next){
+    res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+	if(req.method === "OPTIONS") {
+		res.header("Access-Control-Allow-Methods", "PUT,POST,DELETE");
+		return res.status(200).json({});
+	}
+	next();
+});
+
+mongoose.connect('mongodb://localhost:27017/sandbox');
+var db = mongoose.connection;
+db.on("error",function(error){
+    console.error("connection error", error);
+})
+db.once('open',function(){
+    console.log("connection start");
+})
 
 app.use("/questions",routers);
 
