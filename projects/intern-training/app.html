@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html ng-app="case-management" ng-controller="AppCtrl">
+
+<head>
+    <title ng-bind="pageTitle"></title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="./css/site.css">
+
+    <!-- inject:css -->
+    <!-- endinject -->
+
+    <!-- inject:js -->
+    <!-- endinject -->
+
+</head>
+
+<body>
+
+    <div style="height:0; overflow: hidden;">
+        <!-- inject:svg -->
+        <!-- endinject -->
+    </div>
+
+    <!-- Reenable this, once the requirements have been clarified
+    <session-expiration-dialog threshold="20"></session-expiration-dialog>
+    -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Navbar</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-item nav-link" href="#">Features</a>
+                <a class="nav-item nav-link" href="#">Pricing</a>
+                <a class="nav-item nav-link disabled" href="#">Disabled</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="col-md-3" style="position:relative;height:200px;overflow: hidden">
+        <div class="jumbotron jumbotron-fluid" style="position:absolute;">
+            <div class="container">
+                <h1 class="display-4">Fluid jumbotron</h1>
+                <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>
+            </div>
+        </div>
+    </div>
+    <!-- <button type="button" class="btn btn-light" onclick="goTop()">Top</button>
+    <button type="button" class="btn btn-dark" onclick="goBottom()">Bottom</button>
+    <button type="button" class="btn btn-danger" id="thisOne" style="position:fixed">Danger</button> -->
+
+    <!-- <script src="index.js"></script> -->
+    <!-- <script>
+        var moveItem = document.querySelectorAll('.jumbotron')[0];
+
+        function goTop() {
+            moveItem.style.top = moveItem.offsetTop + 5 + 'px';
+            //moveItem.style.top = "100px";
+
+        }
+
+        function goBottom() {
+            moveItem.style.top = moveItem.offsetTop - 5 + 'px';
+
+        }
+        var x, y;
+        document.getElementById('thisOne').addEventListener('mouseover', () => {
+            x = event.clientX; // Get the horizontal coordinate
+            y = event.clientY; // Get the vertical coordinate
+            var coor = "X coords: " + x + ", Y coords: " + y;
+            console.log(coor);
+            document.getElementById('thisOne').style.top = x + 'px';
+            document.getElementById('thisOne').style.left = y + 'px';
+        });
+    </script> -->
+</body>
+
+</html>
