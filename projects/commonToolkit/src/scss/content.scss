@@ -1,0 +1,13 @@
+.main{
+    min-height: calc(100vh - 96px);//- 56 - 40
+    width: 100%;
+    overflow-x: hidden;
+}
+.breadcrumb{
+    border-bottom: 1px solid #e9ecef;
+    background-color: transparent;
+    .breadcrumb-item{
+        text-transform: uppercase;
+        color: #6c757d;
+    }
+}

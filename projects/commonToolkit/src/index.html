@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html ng-app="common-toolkit" ng-controller="AppCtrl">
+
+<head>
+    <title ng-bind="pageTitle"></title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- inject:css -->
+    <link rel="stylesheet" href="./css/site.css">
+    <link rel="stylesheet" href="./css/site.min.css">
+
+    <!-- endinject -->
+
+    <!-- inject:js -->
+    <script src="./js/site.min.js"></script>
+    <script src="./js/site.js"></script>
+    <!-- endinject -->
+
+</head>
+
+<body>
+    <header class="navbar navbar-expand-lg navbar-light">
+        <a class="navbar-brand" href="#"><i class="fas fa-home"></i></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" ui-sref="home">Home<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Account</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Policy</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                New Activity
+              </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Account</a>
+                        <a class="dropdown-item" href="#">Policy</a>
+                        <a class="dropdown-item" href="#">Quote</a>
+                        <a class="dropdown-item" href="#">Claim</a>
+                    </div>
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        </div>
+    </header>
+    <div class="container-fluid main">
+        <div class="row flex-xl-nowrap">
+            <div class="col-12 col-md-3 col-xl-2 bd-sidebar">
+                <nav class="collapse bd-links">
+
+                    <div class="bd-toc-item active">
+                        <a class="bd-toc-link">
+                                <i class="fas fa-circle navbar-icon"></i>
+                            basic policy info 
+                        </a>
+
+                        <ul class="nav bd-sidenav">
+                            <li>
+                                <a>
+                            Reboot
+                          </a></li>
+                        </ul>
+                    </div>
+                    <div class="bd-toc-item">
+                        <a class="bd-toc-link" >
+                                <i class="far fa-circle navbar-icon"></i>
+                            Businessowners Line
+                        </a>
+
+                        <ul class="nav bd-sidenav">
+                            <li class="active bd-sidenav-active">
+                                <a >
+                            Alerts
+                          </a></li>
+                        
+                        </ul>
+                    </div>
+                    <div class="bd-toc-item">
+                        <a class="bd-toc-link">
+                                <i class="fas fa-info-circle navbar-icon"></i>
+                        location
+                        </a>
+                    </div>
+                    <div class="bd-toc-item">
+                        <a class="bd-toc-link">
+                                <i class="fas fa-exclamation-circle navbar-icon"></i>
+                        blanket
+                        </a>
+                    </div>
+                    <div class="bd-toc-item">
+                        <a class="bd-toc-link">
+                                <i class="fas fa-circle navbar-icon"></i>
+                            Supplemental Information
+                        </a>
+                    </div>
+                    <div class="bd-toc-item">
+                        <a class="bd-toc-link">
+                                <i class="fas fa-circle navbar-icon"></i>
+                            Risk Analysis
+                        </a>
+                    </div>
+                    <div class="bd-toc-item">
+                        <a class="bd-toc-link">
+                                <i class="fas fa-circle navbar-icon"></i>
+                                Policy Review
+                        </a>
+                    </div>
+                    <div class="bd-toc-item">
+                        <a class="bd-toc-link">
+                                <i class="fas fa-circle navbar-icon"></i>
+                                Quote Summary
+                        </a>
+                    </div>
+                    <div class="bd-toc-item">
+                        <a class="bd-toc-link">
+                                <i class="fas fa-circle navbar-icon"></i>
+                                Pay And Issue
+                        </a>
+                    </div>
+                        
+
+                </nav>
+
+            </div>
+            <main class="col-12 col-md-9 col-xl-10 py-md-3 pl-md-5 bd-content" role="main">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">Businessowners</a></li>
+                        <li class="breadcrumb-item">Quote #5000019277</li>
+                        <li class="breadcrumb-item" aria-current="page">BASIC POLICY INFO</li>
+                    </ol>
+                </nav>
+                <div class="row">
+                    <div class="col-12 col-md-12 col-xl-6">
+                            <form>
+                                    <div class="form-group">
+                                      <label for="exampleFormControlInput1">Email address</label>
+                                      <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+                                    </div>
+                                    <div class="form-group">
+                                      <label for="exampleFormControlSelect1">Example select</label>
+                                      <select class="form-control" id="exampleFormControlSelect1">
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                        <option>5</option>
+                                      </select>
+                                    </div>
+                                    <div class="form-group">
+                                      <label for="exampleFormControlSelect2">Example multiple select</label>
+                                      <select multiple class="form-control" id="exampleFormControlSelect2">
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                        <option>5</option>
+                                      </select>
+                                    </div>
+                                    <div class="form-group">
+                                      <label for="exampleFormControlTextarea1">Example textarea</label>
+                                      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                    </div>
+                                  </form>
+                    </div>
+                    <div class="col-12 col-md-12 col-xl-6">
+                            <form>
+                                    <div class="form-group">
+                                      <label for="exampleInputEmail1">Email address</label>
+                                      <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                                      <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                                    </div>
+                                    <div class="form-group">
+                                      <label for="exampleInputPassword1">Password</label>
+                                      <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                                    </div>
+                                    <div class="form-group form-check">
+                                      <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                      <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                  </form>
+                    </div>
+                </div>
+                <div class="container-fluid" ui-view="main"></div>
+                    
+            </main>
+        </div>
+    </div>
+    <footer>
+        <div class="row">
+            <div class="col-12 col-md-12">
+                <p class="text-center">2018 © PwC SDC Shanghai</p>
+            </div>
+        </div>
+        
+    </footer>
+
+
+</body>
+
+</html>
