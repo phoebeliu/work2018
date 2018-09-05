@@ -1,0 +1,1 @@
+export * from './entry-list/entry-list.component';
