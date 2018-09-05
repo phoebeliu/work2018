@@ -1,0 +1,10 @@
+figure {
+    margin: 0;
+    border: 1px saddlebrown solid;
+    position: relative;
+}
+
+:host {
+    display: block;
+    padding: 1em;
+}

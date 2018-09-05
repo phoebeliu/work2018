@@ -33,4 +33,60 @@ Emoji array for use in application
 
  [Barrel Definition](https://angular.io/docs/ts/latest/guide/glossary.html#!#barrel)
 
-[`:host` selector specification](https://www.w3.org/TR/css-scoping-1/#host-selector) [Angular Documentation for using `:host` selector](https://angular.io/docs/ts/latest/guide/component-styles.html#!#sts=:host)
+
+
+[`:host` selector specification](https://www.w3.org/TR/css-scoping-1/#host-selector)
+[Angular Documentation for using `:host` selector](https://angular.io/docs/ts/latest/guide/component-styles.html#!#sts=:host)
+
+[Structural Directive (NgIf, NgFor) Documentation](https://angular.io/docs/ts/latest/guide/structural-directives.html)
+[Attribute Directive (NgClass, NgStyle) Documentation](https://angular.io/docs/ts/latest/guide/attribute-directives.html)
+[Template Syntax Documentation](https://angular.io/docs/ts/latest/guide/template-syntax.html)
+
+
+
+http://www.typescriptlang.org/samples/index.html
+
+The `any` type is a powerful way to work with existing JavaScript, allowing you to gradually opt-in and opt-out of type-checking during compilation. You might expect `Object` to play a similar role, as it does in other languages. But variables of type `Object` only allow you to assign any value to them - you can’t call arbitrary methods on them, even ones that actually exist:
+
+```typescript
+let notSure: any = 4;
+notSure.ifItExists(); // okay, ifItExists might exist at runtime
+notSure.toFixed(); // okay, toFixed exists (but the compiler doesn't check)
+
+let prettySure: Object = 4;
+prettySure.toFixed(); // Error: Property 'toFixed' doesn't exist on type 'Object'.
+```
+
+[Angular Resources](https://angular.io/resources)
+[Angular Modules](https://angular.io/docs/ts/latest/api/#!?query=module)
+
+------
+
+- HTTP Module Installation
+  This course depends on a module that intercepts request to the HTTP service. If you install a different version you may experience compatibility issues. We strongly recommended that you install only the versions referenced in the course.
+
+`Npm install @angular/http@2.4.2 --save --save-exact`
+
+[Observables Documentation](https://angular.io/docs/ts/latest/tutorial/toh-pt6.html#!#observables)
+
+`debugger`
+
+骚操作在此，代码刷新后自动跳转到改行。
+
+```typescript
+export class EntryListComponent {
+
+    constructor(http: Http) {
+        http.get('./app/entries').toPromise()
+            .then(response => { debugger }, error => { debugger })
+    }
+
+}
+```
+
+[ Public, Private, and Protected modifiers](http://www.typescriptlang.org/docs/handbook/classes.html#public-private-and-protected-modifiers) [TypeScript Generics Documentation](https://www.typescriptlang.org/docs/handbook/generics.html)
+
+
+
+[ Angular In Memory Web API](https://github.com/angular/in-memory-web-api) [Backend Server File](https://gist.githubusercontent.com/kenhowardpdx/b5e6b93b04bc81df1236852268616869/raw/793a2cbc1c3fc8783442378abcbd2d56fcbef462/backend.ts) [Angular Lifecycle Hooks](https://angular.io/docs/ts/latest/guide/lifecycle-hooks.html)
+
