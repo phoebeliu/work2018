@@ -90,3 +90,33 @@ export class EntryListComponent {
 
 [ Angular In Memory Web API](https://github.com/angular/in-memory-web-api) [Backend Server File](https://gist.githubusercontent.com/kenhowardpdx/b5e6b93b04bc81df1236852268616869/raw/793a2cbc1c3fc8783442378abcbd2d56fcbef462/backend.ts) [Angular Lifecycle Hooks](https://angular.io/docs/ts/latest/guide/lifecycle-hooks.html)
 
+[Forms Documentation](https://angular.io/docs/ts/latest/guide/forms.html)
+
+`npm install @angular/forms@2.4.2 --save --save-exact`
+
+[Augury Chrome Developer Tools Extension](https://chrome.google.com/webstore/detail/augury/elgalmkoelokbchhkhacckoklkejnhcd)
+
+Note: Once you have installed Augury, restart your browser to access Augury functionality.
+
+The EventEmitter is a way to pass data between components.One component sends the data, while the other component receives it.
+
+[TypeScript Generics Documentation](https://www.typescriptlang.org/docs/handbook/generics.html)
+
+[Angular Documentation ](https://angular.io/docs/ts/latest/)
+[Angular CLI](https://cli.angular.io/)
+
+- The Angular team has put a lot of thought into how best to build an Angular application. Angular's command line interface is a tool to help you quickly build out components and a testing framework with your application. Many of the concepts presented in this course are implemented in the CLI.
+
+------
+
+[TypeScript Configuration](https://angular.io/docs/ts/latest/guide/typescript-configuration.html)
+
+- There are many ways to configure TypeScript to fit your development style. Angular has put together a nice guide describing what each property means and how it relates to developing an Angular application.
+
+------
+
+[Angular Style Guide](https://angular.io/docs/ts/latest/guide/style-guide.html)
+[Angular Cheat Sheet](https://angular.io/docs/ts/latest/guide/cheatsheet.html)
+[Angular GitHub Repository](https://github.com/angular/angular)
+
+- It's important to keep your application up to date with the latest version of the framework. Star the application then create an account on [larger.io](https://www.larger.io/) to get notified when there are updates.

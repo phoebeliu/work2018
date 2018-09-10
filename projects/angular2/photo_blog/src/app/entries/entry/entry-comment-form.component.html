@@ -1,0 +1,22 @@
+<form (submit)="onSubmit()" #commentForm="ngForm" novalidate>
+    <div>
+        <label for="name">name</label>
+        <input type="text" name="name" [(ngModel)]="name" required minlength="5" #nameField="ngModel" [ngStyle]="{'color':nameField.dirty && nameField.valid? 'red' : 'blue'}" />
+        <div class="alert alert-danger" *ngIf="(commentForm.submitted || nameField.touched) && nameField.errors">
+            <div [hidden]="!nameField.errors.required">
+                name is required
+            </div>
+            <div [hidden]="!nameField.errors.minlength">
+                5
+            </div>
+        </div>
+    </div>
+    <div>
+        <label for="comment">comment</label>
+        <textarea name="comment" [(ngModel)]="comment" required minlength="10" #commentField="ngModel"></textarea>
+        <!-- <div class="alert alert-danger">{{error}}</div> -->
+    </div>
+    <div>
+        <button type="submit">Submit</button>
+    </div>
+</form>

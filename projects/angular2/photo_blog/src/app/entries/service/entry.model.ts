@@ -5,3 +5,7 @@ export class Entry {
     comments: any[];
 
 }
+export class EntryComment {
+    name: string;
+    comment: string;
+}
