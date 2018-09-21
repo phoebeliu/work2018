@@ -124,3 +124,42 @@
         }
     }
 }
+
+@mixin clearfix() {
+    //zoom:1;
+    &:before,
+    &:after {
+        content: "";
+        display: table;
+    }
+    &:after {
+        clear: both;
+    }
+}
+
+@mixin font-size($sizeValue, $change: true) {
+    font-size: ($sizeValue) + px; //fallback for old browsers
+    // font-size: (0.125 * ($sizeValue/2)) + rem;
+    // @media $breakpointRetina{
+    //   font-size: $sizeValue + px; //fallback for old browsers
+    //  // font-size: (0.125 * $sizeValue) + rem;
+    // }
+    //@if $sizeValue <= 14 and $change != false{
+    //  font-family: "Arial",sans-serif!important;
+    //} @else {
+    //}
+}
+
+@mixin line-height($heightValue: 12) {
+    line-height: $heightValue + px; //fallback for old browsers
+    //line-height: (0.125 * $heightValue) + rem;
+}
+
+@mixin padding($valueTop, $valueLeft, $valueBottom:null, $valueRight:null) {
+    @if $valueBottom==null {
+        padding: $valueTop*0.75+px $valueLeft+px;
+    }
+    @else if $valueBottom !=null {
+        padding: $valueTop*0.75+px $valueLeft+px $valueBottom*0.75+px $valueRight+px;
+    }
+}

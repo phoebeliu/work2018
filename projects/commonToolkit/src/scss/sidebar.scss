@@ -31,16 +31,17 @@
 //
 .bd-sidebar {
     order: 0;
-    background: repeating-linear-gradient(135deg, transparent, transparent 5px, rgba(179,179,179,0.03) 5px, rgba(179,179,179,0.03) 10px) rgba(179,179,179,0.03);
-    border-bottom: 1px solid rgba(0, 0, 0, .1);
+    //background: repeating-linear-gradient(135deg, transparent, transparent 5px, rgba(179, 179, 179, 0.03) 5px, rgba(179, 179, 179, 0.03) 10px) rgba(179, 179, 179, 0.03);
+    //border-bottom: .125rem solid #f1f3f5;
     @include media-breakpoint-up(md) {
-        @supports (position: sticky) {
-            position: sticky;
-            top: 4rem;
+        @supports (position: fixed) {
+            position: fixed;
+            top: calc(2.25rem + .5rem + 2px + .5rem + 2px);
             z-index: 1000;
-            height: calc(100vh - 4rem);
+            //height: calc(100vh - 2.25rem - .5rem - 2px - .5rem - 2px - 40px);
+            height: calc(100vh - 2.25rem - .5rem - 2px - .5rem - 2px);
         }
-        border-right: 1px solid rgba(0, 0, 0, .1);
+        border-right: .125rem solid $light-border-color;
     }
     @include media-breakpoint-up(xl) {
         flex: 0 1 320px;
@@ -80,28 +81,32 @@
 }
 
 .bd-toc-item {
-    .navbar-icon{
+    .navbar-icon {
         position: absolute;
-        left:5px;
-        top:8px;
+        left: 5px;
+        top: 8px;
     }
-    a.bd-toc-link{
+    a.bd-toc-link {
         position: relative;
-        color:rgb(73, 80, 87);
+        color: rgb(73, 80, 87);
         cursor: pointer;
-        font-size:14px;
-        &:hover{
-            color: #007bff;
-        }
+        font-size: 14px;
+        // &:hover {
+        //     color: $primary-color-dark;
+        // }
     }
     &.active {
-        margin-bottom: 1rem;
+        margin-bottom: 0.5rem;
         &:not(:first-child) {
-            margin-top: 1rem;
+            margin-top: 0.5rem;
         }
         >.bd-toc-link {
-            color: #007bff;
-            background-color: #fff;
+            color: $grey-title-color;
+            background-color: $rgba-grey-slight;
+            font-size: 15px;
+            // &:hover {
+            //     //color: $primary-color;
+            // }
         }
         >.bd-sidenav {
             display: block;

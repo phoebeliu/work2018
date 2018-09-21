@@ -9,21 +9,23 @@ var configuration = {
     paths: {
         src: {
             html: [
-                './src/index.html',
-                './src/home.html',
+                './src/*.html',
+                //'./src/home.html',
+                //'./src/main.html',
             ],
             css: [
                 './node_modules/bootstrap/dist/css/bootstrap.min.css',
                 './node_modules/angular-ui-bootstrap/dist/ui-bootstrap-csp.css',
                 './node_modules/ui-select/dist/select.min.css',
             ],
-            //sass: './src/scss/*.scss',
-            sass: './src/scss/*.scss',
+            sassForWatch: './src/scss/*.scss',//==> this will have css double times
+            sass: './src/scss/main.scss',
             js: [
                 './node_modules/angular/angular.js',
                 './node_modules/angular-animate/angular-animate.js',
                 './node_modules/angular-route/angular-route.js',
                 './node_modules/angular-ui-router/release/angular-ui-router.js',
+                './node_modules/angular-sanitize/angular-sanitize.min.js',
                 './node_modules/jquery/dist/jquery.js',
                 './node_modules/underscore/underscore.js',                
                 './node_modules/ui-select/dist/select.js',
@@ -107,7 +109,7 @@ gulp.task('open', function(){
 gulp.task('watch', function () {
     gulp.watch(configuration.paths.src.html, ['html']);
     gulp.watch(configuration.paths.src.css, ['css']);
-    gulp.watch(configuration.paths.src.sass, ['sass']);
+    gulp.watch(configuration.paths.src.sassForWatch, ['sass']);
     gulp.watch(configuration.paths.src.js, ['js']);
     gulp.watch(configuration.paths.src.ajs, ['appjs']);
 });

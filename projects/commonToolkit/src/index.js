@@ -1,14 +1,15 @@
 angular.module('common-toolkit', [
     'ngAnimate',
+    'ngSanitize',
     'ngRoute',
     'ui.router',
     'ui.select',
-    'ui.bootstrap'
+    'ui.bootstrap',
   ])
   .constant('appConfiguration', window.APP_CONFIG)
   
   .config(function($stateProvider, $urlRouterProvider){
-    $urlRouterProvider.otherwise("/index.html");
+    $urlRouterProvider.otherwise("/index");
   
     $stateProvider.state('home', {
       url: '/home',
@@ -20,6 +21,42 @@ angular.module('common-toolkit', [
       },
       data: {
         pageTitle: 'Home'
+      }
+    });
+    $stateProvider.state('index', {
+      url: '/index',
+      views: {
+        "main": {
+          controller: 'AppCtrl',
+          templateUrl: '/main.html'
+        }
+      },
+      data: {
+        pageTitle: 'index'
+      }
+    });
+    $stateProvider.state('account', {
+      url: '/account',
+      views: {
+        "main": {
+          controller: 'AppCtrl',
+          templateUrl: '/account.html'
+        }
+      },
+      data: {
+        pageTitle: 'account'
+      }
+    });
+    $stateProvider.state('policyInfo', {
+      url: '/policyInfo',
+      views: {
+        "main": {
+          controller: 'LineCtrl',
+          templateUrl: '/policyInfo.html'
+        }
+      },
+      data: {
+        pageTitle: 'policyInfo'
       }
     });
   
@@ -86,6 +123,57 @@ angular.module('common-toolkit', [
           // $scope.$broadcast('loaddata', false);
         });
     };
+    $scope.availableColors = ['Red','Green','Blue','Yellow','Magenta','Maroon','Umbra','Turquoise'];
+    $scope.multipleDemo = {};
+    $scope.multipleDemo.colors = ['Blue','Red'];
+    $scope.multipleDemo.people = "";
+    $('[data-toggle="tooltip"]').tooltip();
+    // $scope.trustAsHtml = function(value) {
+    //   return $sce.trustAsHtml(value);
+    // };
+    // $scope.appendToBodyDemo = {
+    //   remainingToggleTime: 0,
+    //   present: true,
+    //   startToggleTimer: function() {
+    //     var scope = $scope.appendToBodyDemo;
+    //     var promise = $interval(function() {
+    //       if (scope.remainingTime < 1000) {
+    //         $interval.cancel(promise);
+    //         scope.present = !scope.present;
+    //         scope.remainingTime = 0;
+    //       } else {
+    //         scope.remainingTime -= 1000;
+    //       }
+    //     }, 1000);
+    //     scope.remainingTime = 3000;
+    //   }
+    // };
+  })
+  .controller('LineCtrl', function($scope, $state) {
+    $scope.availableColors = ['Red','Green','Blue','Yellow','Magenta','Maroon','Umbra','Turquoise'];
+    $scope.multipleDemo = {};
+    $scope.multipleDemo.colors = ['Blue','Red'];
+    $scope.multipleDemo.people = "";
+    $scope.dateOptions = {
+      dateDisabled: disabled,
+      formatYear: 'yy',
+      maxDate: new Date(2020, 5, 22),
+      minDate: new Date(),
+      startingDay: 1,
+      showWeeks:false
+    };
+    $scope.popup2 = {
+      opened: false
+    };
+    $scope.open2 = function() {
+      $scope.popup2.opened = true;
+    };
+    // Disable weekend selection
+  function disabled(data) {
+    var date = data.date,
+      mode = data.mode;
+    return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
+  }
   })
 //   .controller('ReportController', function($scope, $state, $filter, EapplicationApi) {
 //     console.log($state);

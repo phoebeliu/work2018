@@ -1,6 +1,11 @@
-.fa-exclamation-circle{
-    color: #e64980;
+.fa-exclamation-circle {
+    color: $danger-color;
 }
-.fa-info-circle{
-    color: #fd7e14;
+
+.fa-info-circle {
+    color: $warning-color;
+}
+
+.circle-icon {
+    margin-right: 5px;
 }
