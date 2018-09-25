@@ -1,6 +1,13 @@
 @import 'variables.scss';
+@import 'basic.scss';
 @import 'mixins.scss';
 @import 'sidebar.scss';
 @import 'header.scss';
 @import 'icon.scss';
+@import 'button.scss';
 @import 'content.scss';
+@import "./fontawesome/fontawesome.scss";
+// @import "./fontawesome/regular.scss";
+// @import "./fontawesome/solid.scss";
+// @import "./fontawesome/v4-shims.scss";
+// @import "./fontawesome/brands.scss";

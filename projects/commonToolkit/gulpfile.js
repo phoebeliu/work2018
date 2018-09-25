@@ -3,7 +3,24 @@ var gulp = require('gulp'), // Main Gulp module
     open = require('gulp-open'), // Gulp browser opening plugin
     connect = require('gulp-connect'); // Gulp Web server runner plugin
     sass = require('gulp-sass');
-
+    autoprefixer = require('gulp-autoprefixer');
+    csso = require('gulp-csso');//minify css
+    del = require('del');// del files
+    htmlmin = require('gulp-htmlmin');
+    uglify = require('gulp-uglify');
+    runSequence = require('run-sequence');
+// Set the browser that you want to support
+const AUTOPREFIXER_BROWSERS = [
+    'ie >= 10',
+    'ie_mob >= 10',
+    'ff >= 30',
+    'chrome >= 34',
+    'safari >= 7',
+    'opera >= 23',
+    'ios >= 7',
+    'android >= 4.4',
+    'bb >= 10'
+  ];
 // Configuration
 var configuration = {
     paths: {
@@ -12,6 +29,14 @@ var configuration = {
                 './src/*.html',
                 //'./src/home.html',
                 //'./src/main.html',
+            ],
+            font:[
+                // './src/font/webfonts/fa-regular-400.eot',
+                // './src/font/webfonts/fa-regular-400.svg',
+                // './src/font/webfonts/fa-regular-400.ttf',
+                // './src/font/webfonts/fa-regular-400.woff',
+                // './src/font/webfonts/fa-regular-400.woff2',
+                './src/font/webfonts/*.{ttf,woff,eot,svg,woff2}'
             ],
             css: [
                 './node_modules/bootstrap/dist/css/bootstrap.min.css',
@@ -33,7 +58,7 @@ var configuration = {
                 './node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js',
                 './node_modules/moment/min/moment.js',
                 './node_modules/bootstrap/dist/js/bootstrap.bundle.js',
-                './node_modules/@fortawesome/fontawesome-free/js/all.js',
+                //'./node_modules/@fortawesome/fontawesome-free/js/all.js',
                 // './src/index.js',
             ],
             ajs:[
@@ -48,11 +73,32 @@ var configuration = {
         url: 'http://localhost:3434/'
     }
 };
+// Clean output directory
+gulp.task('clean', () => del(['dist']));
+// Gulp task to minify all files
+// gulp.task('default', ['clean'], function () {
+//     runSequence(
+//       'styles',
+//       'scripts',
+//       'pages'
+//     );
+//   });
 
 // Gulp task to copy HTML files to output directory
 gulp.task('html', function() {
     gulp.src(configuration.paths.src.html)
+        .pipe(htmlmin({
+            collapseWhitespace: true,
+            removeComments: true
+        }))
         .pipe(gulp.dest(configuration.paths.dist))
+        .pipe(connect.reload());
+});
+
+// Gulp task to copy font files to output directory
+gulp.task('font', function() {
+    gulp.src(configuration.paths.src.font)
+        .pipe(gulp.dest(configuration.paths.dist + '/static/webfonts'))
         .pipe(connect.reload());
 });
 
@@ -60,7 +106,7 @@ gulp.task('html', function() {
 gulp.task('css', function () {
    gulp.src(configuration.paths.src.css)
        .pipe(concat('site.css'))
-       .pipe(gulp.dest(configuration.paths.dist + '/css'))
+       .pipe(gulp.dest(configuration.paths.dist + '/static'))
        .pipe(connect.reload());
 });
 
@@ -69,9 +115,18 @@ gulp.task('sass', function () {
     gulp.src(configuration.paths.src.sass)
         .pipe(concat('site.min.css'))
         .pipe(sass({
-            noCache: true
-          }))
-        .pipe(gulp.dest(configuration.paths.dist + '/css'))
+            noCache: true,
+            outputStyle: 'nested',
+            precision: 10,
+            includePaths: ['.'],
+            onError: console.error.bind(console, 'Sass error:')
+        }))
+        // Auto-prefix css styles for cross browser compatibility
+        .pipe(autoprefixer({browsers: AUTOPREFIXER_BROWSERS}))
+        // Minify the file
+        .pipe(csso())
+        // Output
+        .pipe(gulp.dest(configuration.paths.dist + '/static'))
         .pipe(connect.reload());
  });
 
@@ -115,6 +170,6 @@ gulp.task('watch', function () {
 });
 
 // Gulp default task
-gulp.task('default', ['html', 'css', 'sass', 'js','appjs','connect', 'open', 'watch']);
+gulp.task('default', ['html', 'font','css', 'sass', 'js','appjs','connect', 'open', 'watch']);
 //gulp.task('default', ['html', 'css', 'connect', 'open']);
 //gulp.task('default', ['html', 'css', 'sass']);

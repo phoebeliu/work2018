@@ -1,3 +1,9 @@
+@import "./fontawesome/fontawesome.scss";
+@import "./fontawesome/regular.scss";
+@import "./fontawesome/solid.scss";
+@import "./fontawesome/v4-shims.scss";
+@import "./fontawesome/brands.scss";
+@import "./fontawesome/mixins";
 .fa-exclamation-circle {
     color: $danger-color;
 }
@@ -8,4 +14,21 @@
 
 .circle-icon {
     margin-right: 5px;
+}
+
+.glyphicon {
+    @extend %fa-icon!optional;
+    @extend .fas;
+}
+
+.glyphicon-chevron-left {
+    &:before {
+        content: fa-content($fa-var-arrow-circle-left);
+    }
+}
+
+.glyphicon-chevron-right {
+    &:before {
+        content: fa-content($fa-var-arrow-circle-right);
+    }
 }

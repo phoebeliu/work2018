@@ -1,0 +1,104 @@
+.btn-outline-primary {
+    color: $primary-color-dark;
+    border-color: $primary-color-dark;
+    &:hover {
+        background-color: $primary-color-dark;
+        border-color: $primary-color-dark;
+    }
+}
+
+.btn-primary {
+    background-color: $primary-color-dark;
+    border-color: $primary-color-dark;
+    //color: $indigo;
+    &:hover {
+        background-color: $primary-color;
+        border-color: $primary-color;
+    }
+    &:focus {
+        box-shadow: none;
+    }
+}
+
+.btn {
+    text-transform: uppercase;
+    &:focus {
+        box-shadow: none;
+    }
+}
+
+.page-btn {
+    min-width: 150px;
+}
+
+.btn-default-focus {
+    outline: 0;
+    box-shadow: none;
+}
+
+.icon-btn {
+    cursor: pointer;
+    &:hover {
+        color: $elegant-color-dark!important;
+    }
+}
+
+.uib-datepicker-current {
+    background-color: $bg-secondary;
+    border-color: $bg-secondary;
+    //color: $indigo;
+    &:hover {
+        background-color: $bg-secondary-dark;
+        border-color: $bg-secondary-dark;
+    }
+}
+
+.uib-clear {
+    background-color: $orange;
+    border-color: $orange;
+    //color: $indigo;
+    &:hover {
+        background-color: $deep-orange;
+        border-color: $deep-orange;
+    }
+}
+
+.uib-close {
+    background-color: $grey;
+    border-color: $grey;
+    //color: $indigo;
+    &:hover {
+        background-color: $blue-grey;
+        border-color: $blue-grey;
+    }
+}
+
+.uib-day {
+    .btn-info {
+        &:not(:disabled):not(.disabled).active {
+            background-color: $bg-secondary;
+            border-color: $bg-secondary;
+        }
+    }
+    .text-info {
+        color: $orange!important;
+    }
+}
+
+.btn-section {
+    border-radius: 2rem;
+    color: $label-color;
+    border-color: $label-color;
+    text-transform: uppercase;
+    padding: .175rem .5rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    float: right;
+    &:hover {
+        background-color: $label-color;
+        color: #fff;
+    }
+    .fas {
+        margin-right: 0.25rem;
+    }
+}

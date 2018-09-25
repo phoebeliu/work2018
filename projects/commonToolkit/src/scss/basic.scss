@@ -1,0 +1,17 @@
+body {
+    overflow-x: hidden;
+}
+
+p {
+    color: $stylish-color-dark;
+}
+
+* {
+    &:focus {
+        outline: none;
+    }
+}
+
+.pull-right {
+    float: right;
+}
