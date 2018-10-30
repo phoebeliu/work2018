@@ -1,0 +1,20 @@
+<div class="tooltip--wrapper">
+    <div class="tooltip--transclude">
+        <ng-transclude ng-class="{'add-tooltip' : (info || uniqueID) && validTooltip}"></ng-transclude>
+        <div class="tooltip--container-warpper" id='{{toolTipId}}' ng-if="validTooltip">
+            <span ng-click="manageVisibility(true)" class="tooltip--button">i</span>
+            <div class="tooltip--container">
+                <p ng-if="uniqueID">{{text}}</p>
+                <div ng-if="info">
+                    <p ng-if="info.tooltipHead">{{info.tooltipHead}}</p>
+                    <ul ng-if="info.pdfLinks">
+                        <li ng-repeat=" link in info.pdfLinks">
+                            <a href="{{link.link}}" title="Download this file" class="download-pdf">{{link.name}}</a>
+                        </li>
+                    </ul>
+                    <p ng-if="info.moreInfo" ng-bind-html="info.moreInfo.translate"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -167,5 +167,5 @@ define(['xx.html', 'underscore',
                 }
             };
         }];
-    }
-)
+    },
+])
