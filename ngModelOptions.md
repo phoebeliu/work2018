@@ -1,0 +1,9 @@
+# ngModelOptions
+
+### https://code.angularjs.org/1.4.5/docs/api/ng/directive/ngModelOptions
+
+### Arguments
+
+| Param          | Type                                             | Details                                                      |
+| -------------- | ------------------------------------------------ | ------------------------------------------------------------ |
+| ngModelOptions | [Object](https://code.angularjs.org/1.4.5/docs/) | options to apply to the current model. Valid keys are:`updateOn`: string specifying which event should the input be bound to. You can set several events using an space delimited list. There is a special event called `default` that matches the default events belonging of the control.`debounce`: integer value which contains the debounce model update value in milliseconds. A value of 0 triggers an immediate update. If an object is supplied instead, you can specify a custom value for each event. For example:`ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }"``allowInvalid`: boolean value which indicates that the model can be set with values that did not validate correctly instead of the default behavior of setting the model to undefined.`getterSetter`: boolean value which determines whether or not to treat functions bound to `ngModel` as getters/setters.`timezone`: Defines the timezone to be used to read/write the `Date` instance in the model for`<input type="date">`, `<input type="time">`, ... . It understands UTC/GMT and the continental US time zone abbreviations, but for general use, use a time zone offset, for example, `'+0430'` (4 hours, 30 minutes east of the Greenwich meridian) If not specified, the timezone of the browser will be used. |
