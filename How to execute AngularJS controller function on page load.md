@@ -28,3 +28,16 @@ $scope.$on('$stateChangeSuccess', function () {
 
 https://github.com/angular-ui/ui-router/issues/1768
 
+## Events
+
+- ### $viewContentLoaded
+
+  Emitted every time the ngView content is reloaded.
+
+  #### Type:
+
+  emit
+
+  #### Target:
+
+  the current ngView scope
