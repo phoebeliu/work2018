@@ -26,7 +26,33 @@ Result:
 
 So after research and test we think we should use ng-if tech to do the tab switchover. Because it only take roughly 4 to 5 seconds finish switchover but ng-include and ui-view will take about 20 seconds.
 
+https://stackoverflow.com/questions/48787883/best-practice-and-performance-in-angularjs-ng-if-with-class-and-icon
+
+it is best to replace `ng-include` with a component / directive with their `template` (**not** `templateUrl`) for **performance** improvement, since it is asynchronous and takes time to load the HTML
+
 \2. Tab content
+
+We have below conclusions after doing some research about gl coverage part, the route cause is the higher complexity of the page template (html) after redesign.
+
+Actually when angularjs load a template, it would go through all html elements, then parse and compile each element to build whole DOM tree. So if template is complex, it would cost much more time to compile and build DOM.   
+
+Below is a screenshot from chrome performance analysis tools and I test it by switch states from coverage to condition and most of time is spent for compiling the element node.
+
+ 
+
+We also check the angularjs doc and it said we’d better to keep the DOM small for good performance.
+
+https://material.angularjs.org/1.1.9/performance/internet-explorer
+
+
+
+## elemData.handle
+
+## COMPILE
+
+## minor-gc / major-gc / full-gc / Dom GC
+
+
 
 # Angular performance tips
 
