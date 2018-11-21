@@ -52,6 +52,20 @@ https://material.angularjs.org/1.1.9/performance/internet-explorer
 
 ## minor-gc / major-gc / full-gc / Dom GC
 
+As you know when angular load a state, it would compile its template firstly which means it would go through all elements from html to register and compile the directives of each element. After that, it would build page scope and then link the scope with its template to render the page. So it would take much more time to compile the template when html template is complex.
+
+Solutions **:** 
+
+Load each tab by state router instead of ng-if, the tabs would be built as children states.
+
+If there are many XXX, we only open and expand one XXX at one time.
+
+Code Optimization:
+
+Reduce some propeties created in page scope object which are useless in template.
+
+Try to reduce or remove the scope fn properties which are used in some directives like ng-repeat or ng-class. 
+
 
 
 # Angular performance tips
