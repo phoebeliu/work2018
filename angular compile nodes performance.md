@@ -66,7 +66,41 @@ Reduce some propeties created in page scope object which are useless in template
 
 Try to reduce or remove the scope fn properties which are used in some directives like ng-repeat or ng-class. 
 
+## ==one time data binding
 
+<https://toddmotto.com/angular-one-time-binding-syntax/>
+
+Angular 1.3 shipped with an awesome new performance enhancing feature - one-time binding. What does this mean for us Angular developers and the performance of our apps? A lot! For us developers, adoption is really simple, and the performance gains for our apps are huge.
+
+Let’s look at the problem really quick, starting with the `$digest` cycle. The `$digest` cycle is essentially a loop through all our bindings which checks for changes in our data and re-renders any value changes. As our apps scale, binding counts increase and our `$digest` loop’s size increases. This hurts our performance when we have a large volume of bindings per application view. So what can we do to optimise this?
+
+Thankfully, Angular 1.3 has put a lot of effort into performance, so we can utilise their new syntaxes and APIs to build faster apps.
+
+One-time binding is very simple, from the docs: *One-time expressions will stop recalculating once they are stable, which happens after the first digest if the expression result is a non-undefined value.*
+
+In a nut shell, when we declare a value such as `{{ foo }}` inside the DOM, once this value becomes defined, Angular will render it, unbind it from the watchers and thus reduce the volume of bindings inside the `$digest` loop. Simple!
+
+The new syntax adds `::` in front of any values, which declares we want one time binding:
+
+```js
+<input type="text" ng-model="vm.user">
+<p>
+  {{ ::vm.user }}
+</p>
+```
+
+## == controller-less directives
+
+Controller instantiation is a cost and angular developers have seen benefits pre 1.5 angular (components) to using a directive + service style of operation. 
+
+In the service is all your stateless pure function operations, and you access the service functions from the directive link functionality. The way to access angular objects through link is to bind the dependency injection through in directive instansiation.
+
+Angular.directive([‘service’, function(service){}]);
+ Which for us would be
+
+Angular.directive([‘service’, requireJSDirectiveObject]);
+
+Since we have directive in ng-repeat this could help.
 
 # Angular performance tips
 

@@ -9,3 +9,5 @@
 4.elemData.handle
 
 5.$viewContentLoaded
+
+6.controller compile link
