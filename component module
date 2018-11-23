@@ -1,0 +1,31 @@
+# component module
+
+这几天看完这些，做下自我总结：
+
+## 1.component
+
+1）isolated scope
+
+2）scope---变为controller概念
+
+3）controller分为stateless 和stateful两类，stateless一般是做交互和特定的一些，不重用的一类；stateful controller转化为 directive，directive再转化为component。
+
+## 2.MVC—Component化
+
+优点：功能封装，跨项目复用
+
+生命周期：初始化---渲染—存活期—销毁
+
+通讯：父子（事件，直接调用）
+
+​	     兄弟、远方亲戚（时间总线）
+
+​	     cookie ,locastorage ,session
+
+## 3.模块化 module
+
+NODEJS---WEBPACK---TO REPALCE REQUIREJS
+
+引用 加载 依赖注入问题
+
+框架间 例如angular font-awesome moment之间
