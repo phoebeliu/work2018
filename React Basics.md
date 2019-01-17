@@ -118,3 +118,14 @@ return;
 http://jamesknelson.com/javascript-return-parenthesis/
 
 大神膜拜一下
+
+
+
+When a component contains another component, it's called composition. Composing components is a core principle in React. You'll usually have parent components with one or many child components. This gives the parent component the ability to control how its child components are rendered.
+
+#### Resources
+
+- [Composing Components](https://reactjs.org/docs/components-and-props.html#composing-components)
+- [Extracting Components](https://reactjs.org/docs/components-and-props.html#extracting-components)
+- [How do you know what should be its own component?](https://reactjs.org/docs/thinking-in-react.html#step-1-break-the-ui-into-a-component-hierarchy)
+
