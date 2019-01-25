@@ -35,4 +35,5 @@ https://codepen.io/lionelpaulus/pen/YGXwxr
       checkOffset();
     });
 
-
+http://jsfiddle.net/bryanjamesross/VtPcm/
+没咋看懂，稍后研究
