@@ -1,0 +1,29 @@
+<!--<ng-transclude >-->
+<!--</ng-transclude>-->
+<div class="wizard-section--content for-button-bottom" ng-if="!popUp">
+    <div class="clearfix form-new-two-col-wrapper fix-button-wrap">
+        <div class="page-buttons  fix-button-bottom" ng-if="!custom">
+            <button class="nbs-button orange-button back-button" ng-if="backIf" ng-disabled="backDisabled" ng-click="backMain()"><i class="fa fa-chevron-left" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;Back</button>
+            <button class="nbs-button orange-button next-button"  ng-disabled="nextDisabled" ng-click="nextMain()" >{{nextButton}}&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-right" aria-hidden="true"></i></button>
+        </div>
+        <div class="page-buttons  fix-button-bottom" ng-if="custom =='quotesummary'">
+            <div ng-if="customParam">
+                <button class="nbs-button orange-button back-button"  ng-if="!isIssuableQuote" ng-click="issuablequoteFn()" >{{'quoteandbind.common.controllers.Make Issuable' | translate}}</button>
+                <button class="nbs-button orange-button back-button"  ng-if="isIssuableQuote" ng-click="payissueFn()" >{{'quoteandbind.common.controllers.Pay and Issue' | translate}}</button>
+                <button class="nbs-button orange-button next-button smaller"   ng-click="nextproductFn()" >{{'quoteandbind.common.controllers.Continue to' | translate}}{{nextlob}}&nbsp;<i class="fa fa-chevron-right" aria-hidden="true"></i></button>
+            </div>
+            <div ng-if="!customParam">
+                <button class="nbs-button orange-button back-button"  ng-click="backMain()"><i class="fa fa-chevron-left" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;Back</button>
+                <button class="nbs-button orange-button next-button smaller" ng-if="isIssuableQuote"   ng-click="payissueFn()" >{{'quoteandbind.common.controllers.Pay and Issue' | translate}}&nbsp;<i class="fa fa-chevron-right" aria-hidden="true"></i></button>
+                <button class="nbs-button orange-button next-button" ng-if="!isIssuableQuote"   ng-click="issuablequoteFn()" >{{'quoteandbind.common.controllers.Make Issuable' | translate}}</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div ng-if="popUp" class="modal-footer">
+    <div class="clearfix fix-button-wrap">
+        <div class="page-buttons  fix-button-bottom">
+            <button class="nbs-button orange-button next-button"  data-ng-disabled="popSaveDisabled" ng-if="popSaveIf" ng-click="savePopUp()" >Save & Close</button>
+        </div>
+    </div>
+</div>
