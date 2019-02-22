@@ -105,6 +105,24 @@ define(['text!./templates/next-and-back.html', 'underscore'],
                         }
 
                     }
+                    //THE BELOW FUNCTION IS FOR STICKY NAV
+//                     function checkOffset() {
+                        
+//                         AAA = document.querySelector('#AAA');
+//                         if (window.pageYOffset > AAA.offsetTop) {
+//                             AAA.classList.add("fixed");
+//                         } else {
+//                             AAA.classList.remove("fixed");
+//                         }
+//                         // if((getRectTop(AAA) + document.body.scrollTop) + AAA.offsetHeight >= (document.body.scrollTop) - 10){
+//                         //     AAA.classList.add("fixed");
+//                         // }
+//                         //
+//                         // if(document.body.scrollTop + window.innerHeight > (getRectTop(Header) + document.body.scrollTop)){
+//                         //     AAA.classList.remove("fixed");
+//                         // }
+
+//                     }
 
                     document.addEventListener("scroll", function(){
                        if(document.querySelector('.fix-button-bottom') && document.querySelector('.global-footer')){
