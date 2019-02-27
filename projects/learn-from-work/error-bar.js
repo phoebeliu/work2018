@@ -58,11 +58,52 @@ define(['text!./templates/line-validation-result.html','../util/LineValidationUt
                             $scope.checkOffset();
                         }
                     };
+                    // $scope.$on("focus-field", function(event, field) {
+                    //     console.log("focus-field");
+                    //     console.log(field);
+                    //     //$scope.name = name;
+                    // });
+                    var destroyHandler = $rootScope.$on("focus-field", function(event, field) {
+                        if($scope.isErrorField(field[0].id) >= 0){
+                            $scope.showingErrorIndex = $scope.isErrorField(field[0].id);
+                            $scope.screenObj.toggleValidationResults =false;
+                        }
+                    });
+
+                    $scope.isErrorField = function(field){
+                        return _.every($scope.validations,function(validation,index){
+                            if(validation && validation.fieldId === field){
+                                return index;
+                            }
+                        });
+                    };
+                     $scope.$on('$destroy', destroyHandler);
                     
                 }]
             }
         }]
 
     })
+
+
+//in another directive 
+link: function (scope, element, attrs, ctrls) {
+    element.on('focusin', function() {
+        scope.focused = true;
+        console.log('1');
+        //scope.$emit("focus-field", element);
+        //$rootScope.$emit("focus-field", element);
+        if(scope.showError){
+            scope.$root.$emit("focus-field", element);
+        }
+        // scope.$apply();
+        //element.addClass('control-group-focused');
+    });
+    element.on('focusout', function(){
+        scope.focused = false;
+        // scope.$apply();
+        //element.removeClass('control-group-focused');
+    });
+}
 
 
