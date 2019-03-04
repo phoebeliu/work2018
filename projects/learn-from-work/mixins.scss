@@ -1,0 +1,1071 @@
+@import "html5-input-types";
+
+/* Use for providing cache boosting for images */
+@mixin image-versioning($image, $width, $height) {
+  display: inline-block;
+  width: $width;
+  height: $height;
+  background: image-url($image) no-repeat 0 0; // no-repeat to prevent scale bugs
+  background-size: cover;
+}
+
+@mixin whiteTextShadow() {
+  text-shadow: 0 1px 0 rgba($white-color, 0.5);
+}
+
+@mixin bgGrad($color1, $color2) {
+  background: $color2;
+  background-image: linear-gradient(top, $color1, $color2);
+}
+
+@mixin lob-box($color) {
+  background: $color;
+  border: 1px solid darken($color, 5);
+
+  &:hover {
+    background: darken($color, 3);
+  }
+}
+
+@mixin lob-box-selected($color) {
+  background: $color;
+  border: 3px solid darken($color, 5);
+
+  &:hover {
+    background: darken($color, 3);
+  }
+}
+
+@mixin clearfix {
+  &:after {
+    content: "";
+    clear: both;
+    display: table;
+    /* For clearfixes inside tables. */
+    border-spacing: 0;
+  }
+}
+
+@mixin absolute-hidden {
+  position: absolute;
+  top: -9999px;
+  left: -9999px;
+}
+
+// display: none; affects accessibility
+// absolute position with e.g. top:-9999px; makes scroll jumping up after element becomes to be checked
+@mixin form-element-hidden {
+  visibility: hidden;
+  position: absolute; // without top, left etc. element stays on the same position
+}
+
+/*  Container with default box specification. */
+@mixin default-box-border() {
+  border: 1px solid $default-box-border-color;
+  border-radius: 3px;
+}
+
+/** Default text on the portals. */
+@mixin common-data() {
+  color: $base-text-color;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+/** Default label style. */
+@mixin common-label() {
+  color: $base-label-text-color;
+  font-weight: bold;
+  padding-right: 0.3em;
+}
+
+@mixin read-only-form-text() {
+  font-size: $base-font-size;
+
+  opacity: 0.7;
+}
+
+/**
+  Use to provide minimum height for table cells which can contain icon.
+  They will have same height even if they are empty.
+*/
+@mixin tableCellWithIconHeight($iconHeight) {
+  height: calc(#{$iconHeight} + 2 * #{$tableCellPadding});
+}
+
+/**
+  Use to set property equal to standard input height
+
+  Inputs have padding which is set in "em"
+  Also have border
+  Their inner height is equal to base-line height
+*/
+@mixin equalToInputHeight($prop) {
+  #{$prop}: calc(#{$base-line-height} + #{2*$inputBigVertPadding} + #{2*$inputBorder});
+}
+
+/** SUSY gutters */
+@mixin remove-left-gutter() {
+  padding-left: 0;
+}
+
+@mixin remove-right-gutter() {
+  padding-right: 0;
+}
+
+/*
+  Other section styles
+  It appears when e.g. user selects something which needs some details provided
+*/
+@mixin otherSection($topIndent: null, $transitionTime: 0.25s) {
+
+  .other-section {
+    padding-top: $topIndent;
+    opacity: 1;
+    @include clearfix;
+    transition-property: opacity;
+    transition-duration: $transitionTime;
+
+    // NG-ANIMATE
+    &.ng-enter {
+      opacity: 0;
+
+      &.ng-enter-active {
+        opacity: 1;
+      }
+    }
+
+    &.ng-leave {
+      &.ng-leave-active {
+        opacity: 0;
+      }
+    }
+  }
+}
+
+/*
+  Adds "text..." when there is not enough space for inner text
+*/
+@mixin overflowEllipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/*--------------------/*
+  ANIMATIONS
+/*--------------------*/
+@mixin slideAppearance() {
+  transition-property: transform, max-height;
+  transition-duration: 0.2s;
+  transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+  transform: scaleY(0); // collapse animation
+  max-height: 0; // to prevent overlapping of the content under the box
+  overflow: hidden; // to prevent overlapping of the content under the box
+  transform-origin: 0 0;
+
+  &.slide-appearance {
+    transform: scaleY(1); // collapse animation
+    max-height: 9999px; // to prevent overlapping of the content under the box
+  }
+}
+
+/*--------------------/*
+  MOBILE
+/*--------------------*/
+@mixin full-width-for-mobile {
+  @include media('<=tabletPortrait') {
+    width: 100%;
+    display: block;
+    float: none;
+    margin-left: 0;
+    margin-right: 0;
+    @content;
+  }
+}
+
+/// https://css-tricks.com/snippets/sass/opposite-direction-function/
+/// Returns the opposite direction of each direction in a list
+/// @author Hugo Giraudel
+/// @param {List} $directions - List of initial directions
+/// @return {List} - List of opposite directions
+@function opposite-direction($directions) {
+  $opposite-directions: ();
+  $direction-map: (
+          'top': 'bottom',
+          'right': 'left',
+          'bottom': 'top',
+          'left': 'right',
+          'center': 'center',
+          'ltr': 'rtl',
+          'rtl': 'ltr'
+  );
+
+  @each $direction in $directions {
+    $direction: to-lower-case($direction);
+
+    @if map-has-key($direction-map, $direction) {
+      $opposite-directions: append($opposite-directions, unquote(map-get($direction-map, $direction)));
+    } @else {
+      @warn "No opposite direction can be found for `#{$direction}`. Direction omitted.";
+    }
+  }
+
+  @return $opposite-directions;
+}
+
+//// https://css-tricks.com/snippets/sass/css-triangle-mixin/
+/// Triangle helper mixin
+/// @param {Direction} $direction - Triangle direction, either `top`, `right`, `bottom` or `left`
+/// @param {Length} $size [1em] - Triangle size
+/// @param {Color} $color [currentcolor] - Triangle color
+@mixin triangle($direction, $size: 1em, $color: $white-color) {
+  @if not index(top right bottom left, $direction) {
+    @error "Direction must be either `top`, `right`, `bottom` or `left`.";
+  }
+
+  width: 0;
+  height: 0;
+  content: '';
+  z-index: 2;
+  border-#{opposite-direction($direction)}: $size solid $color;
+
+  $perpendicular-borders: $size solid transparent;
+
+  @if $direction == top or $direction == bottom {
+    border-left: $perpendicular-borders;
+    border-right: $perpendicular-borders;
+  } @else if $direction == right or $direction == left {
+    border-bottom: $perpendicular-borders;
+    border-top: $perpendicular-borders;
+  }
+}
+
+// https://css-tricks.com/centering-in-the-unknown/
+@mixin ghostVerticalAlign() {
+  &:before {
+    content: '';
+    display: inline-block;
+    vertical-align: middle;
+    height: 100%;
+    width: .1px;
+  }
+}
+//Mixins
+@mixin clearfix() {
+  //zoom:1;
+  &:before, &:after { content: ""; display: table; }
+  &:after { clear: both; }
+}
+
+@mixin border-radius($radius){
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+  border-radius: $radius;
+  background-clip: padding-box;
+}
+
+@mixin opacity($opacity) {
+  opacity: $opacity;
+  $opacity-ie: $opacity * 100;
+  filter: alpha(opacity=$opacity-ie); //IE8
+  -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=$opacity)";
+  -khtml-opacity: $opacity;
+  -moz-opacity: $opacity;
+}
+
+@mixin ietextshadow($shadow-color:#000, $offx:3,$offy:3){
+   filter: progid:DXImageTransform.Microsoft.Chroma(Color=#fff);
+   filter: progid:DXImageTransform.Microsoft.DropShadow(Color=#4f4f4f, OffX=1, OffY=1);
+}
+
+@mixin center-block {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@mixin text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@mixin font-size($sizeValue,$change: true){
+  font-size: ($sizeValue) + px; //fallback for old browsers
+ // font-size: (0.125 * ($sizeValue/2)) + rem;
+
+  // @media $breakpointRetina{
+  //   font-size: $sizeValue + px; //fallback for old browsers
+  //  // font-size: (0.125 * $sizeValue) + rem;
+  // }
+  //@if $sizeValue <= 14 and $change != false{
+  //  font-family: "Arial",sans-serif!important;
+  //} @else {
+  //}
+
+}
+
+@mixin line-height($heightValue: 12 ){
+    line-height: $heightValue + px; //fallback for old browsers
+    //line-height: (0.125 * $heightValue) + rem;
+}
+
+@mixin box-sizing($box-model) {
+  -webkit-box-sizing: $box-model; // Safari <= 5
+     -moz-box-sizing: $box-model; // Firefox <= 19
+          box-sizing: $box-model;
+}
+
+@mixin placeholder($color:#acacac){
+    &::-webkit-input-placeholder {
+       color: $color;
+    }
+    &:-moz-placeholder { /* Firefox 18- */
+       color: $color;
+    }
+    &::-moz-placeholder {  /* Firefox 19+ */
+       color: $color;
+    }
+    &:-ms-input-placeholder {
+       color: $color;
+    }
+}
+
+@mixin normalize-list(){
+  list-style:none;
+  margin:0;
+  padding:0;
+}
+
+@mixin hoverline() {
+  text-decoration:none;
+  &:hover { text-decoration:underline; }
+}
+
+@mixin font-face($name, $font-files, $eot: false, $weight: false, $style: false) {
+    $iefont: unquote("#{$eot}?#iefix");
+
+    @font-face {
+        font-family: quote($name);
+        @if $eot {
+            src: font-url($eot);
+            $font-files: font-url($iefont) unquote("format('embedded-opentype')"), $font-files;
+        }
+        src: $font-files;
+        @if weight {
+            font-weight: $weight;
+        }
+        @if $style {
+            font-style: $style;
+        }
+    }
+}
+
+@mixin mig-button($type:primary, $width:0) {
+  text-decoration:none!important;
+  cursor: pointer;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  letter-spacing: 0.5px;
+  @if $width >= 0px {
+    display:block;
+  } @else {
+    @include inline-block;
+  }
+
+ @if $type == blueBtn {
+    @include border-radius(15px);
+    color:$white;
+    //box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.4);
+    text-transform: uppercase;
+    min-height: 31px;
+    line-height: 31px;
+    text-align: center;
+    padding: 0 25px;
+    @include font-size($mig-font-13,false);
+    @include mig-custom-fonts(condensedDemi);
+    border:none;
+    background: #00B5E2;
+    position: relative;
+    .inner{
+      background: rgba(255, 255, 255, 0.2);
+      display: block;
+      position: absolute;
+      top:0;
+      left:0;
+      width: 100%;
+      height: 100%;
+    }
+    .text{
+      @include inline-block();
+      position: relative;
+      color:$white;
+      font-style: normal;
+      @include font-size($mig-font-13,false);
+      @include mig-custom-fonts(condensedDemi);
+    }
+
+    &:disabled, &.disabled{
+      cursor: text !important;
+      background:$grey-m;
+
+      .inner{
+        background:$grey-m;
+
+      }
+
+    }
+  }
+  @else if $type == primaryBlue {
+    color:$white;
+    text-transform: uppercase;
+    text-align: center;
+    text-decoration: none;
+    @include mig-custom-fonts(condensedDemi);
+    background-image: -webkit-linear-gradient(#00bde3, #00b5e1), -webkit-linear-gradient(#00bde3, #00b5e1);
+    background-image: -o-linear-gradient(#00bde3, #00b5e1), -o-linear-gradient(#00bde3, #00b5e1);
+    background-image: linear-gradient(#00bde3, #00b5e1), linear-gradient(#00bde3, #00b5e1);
+    @include border-radius(15px);
+    @include inline-block();
+    min-height: 31px;
+    line-height: 31px;
+    text-align: center;
+    padding: 0 25px;
+    border:none;
+    &:hover{
+      @include transition($aqua-blue 300ms);
+      @include transition-duration(.3s);
+      @include transition-timing-function(ease-in);
+    }
+  }
+  @else if $type == primaryBlueAlt {
+    background: transparent;
+    color:$aqua-blue;
+    text-decoration: none;
+    text-transform: uppercase;
+    text-align: center;
+    @include font-size($mig-font-13,false);
+    @include line-height($mig-font-15);
+    @include mig-custom-fonts(condensedDemi);
+    min-height: 31px;
+    line-height: 31px;
+    text-align: center;
+    padding: 0 25px;
+    @include inline-block();
+    border:none;
+
+    &:hover{
+      text-decoration: underline;
+    }
+  }
+  @else if $type == squaredBlueLines {
+    @include border-radius(4px);
+    min-height: 31px;
+    text-align: center;
+    border: 2px solid $light-blue-grey;
+    text-transform: uppercase;
+    color: $aqua-blue;
+    background: $white;
+    padding: 5px 15px;
+    font-size: 18px;
+
+    @include breakpoint(small){
+      padding:5px;
+    }
+
+    &:hover{
+      background: $aqua-blue;
+      color:$white;
+
+      .fa{
+        color:$white
+      }
+    }
+
+    &:disabled, &.disabled{
+      background: tranpsarent;
+      border:2px solid $grey;
+      cursor: text !important;
+
+      &:hover{
+        background: $aqua-blue;
+        color:$white;
+      }
+    }
+  }
+  @else if $type == whiteRectBlueLines {
+    text-transform: uppercase;
+    @include border-radius(15px);
+    background: transparent;
+    border: 1px solid $aqua-blue;
+    min-width: 150px;
+    color: $aqua-blue;
+    font-family:$font-franklinCondense;
+    text-align: center;
+    @include font-size($mig-font-13,false);
+    @include line-height($mig-font-13);
+    font-weight: normal;
+    padding: 8px 20px;
+    @include mig-custom-fonts(condensedDemi);
+    @include transition(transparent 300ms);
+    @include transition-duration(.3s);
+    @include transition-timing-function(ease-in);
+
+    @media (min-width: 768px){
+      min-width: 145px;
+    }
+
+    @include breakpoint(small){
+      min-width: 140px;
+      padding:5px 10px;
+      @include font-size($mig-font-default,false);
+      @include line-height($mig-font-default + 4);
+    }
+
+    @include breakpoint(xsmall){
+      min-width: 95%;
+    }
+
+    .icon{
+      margin-right: 5px;
+    }
+
+    &:hover{
+      background: $aqua-blue;
+      border: 1px solid $aqua-blue;
+      color:$white;
+      text-decoration: none;
+    }
+
+    &:disabled, &.disabled{
+      background: transparent;
+      border:1px solid #CCDCE6;
+      color: #CCDCE6;
+      box-shadow: none;
+      cursor: text !important;
+      padding: 8px 20px;
+      font-family:$font-franklinCondense;
+      text-align: center;
+      @include font-size($mig-font-13,false);
+      @include line-height($mig-font-13);
+      font-weight: normal;
+
+      &:hover{
+        background: transparent;
+        border:1px solid #CCDCE6;
+        color: #CCDCE6;
+        box-shadow: none;
+        cursor: text;
+        padding: 8px 20px;
+        font-family:$font-franklinCondense;
+        text-align: center;
+        @include font-size($mig-font-13,false);
+        @include line-height($mig-font-13);
+        font-weight: normal;
+      }
+    }
+  }
+  @else if $type == whiteRectBlueLinesAlt {
+    text-transform: uppercase;
+    background: transparent;
+    border: none;
+    min-width: 160px;
+    color: $aqua-blue;
+    font-family:$font-franklinCondense;
+    text-align: center;
+    @include font-size($mig-font-13,false);
+    @include line-height($mig-font-13);
+    font-weight: normal;
+    padding: 8px 20px;
+    @include mig-custom-fonts(condensedDemi);
+    @include transition(transparent 300ms);
+    @include transition-duration(.3s);
+    @include transition-timing-function(ease-in);
+
+    @include breakpoint(small){
+      min-width: 150px;
+      padding:5px 10px;
+      @include font-size($mig-font-default,false);
+      @include line-height($mig-font-default + 4);
+    }
+
+    @include breakpoint(xsmall){
+      min-width: 95%;
+    }
+
+    .icon{
+      margin-right: 5px;
+    }
+
+    &:hover{
+      color:$navy-blue;
+      text-decoration: none;
+    }
+
+    &:disabled, &.disabled{
+      background: transparent;
+      color: $grey-m;
+      box-shadow: none;
+      cursor: text !important;
+      padding: 8px 20px;
+      font-family:$font-franklinCondense;
+      text-align: center;
+      @include font-size($mig-font-13,false);
+      @include line-height($mig-font-13);
+      font-weight: normal;
+
+      &:hover{
+        background: transparent;
+        color: $grey-m;
+        box-shadow: none;
+        cursor: text;
+        padding: 8px 20px;
+        font-family:$font-franklinCondense;
+        text-align: center;
+        @include font-size($mig-font-13,false);
+        @include line-height($mig-font-13);
+        font-weight: normal;
+      }
+    }
+  }
+  @else if $type == rectLightWhite {
+    text-transform: uppercase;
+    @include border-radius(4.3px);
+      background-color: $white;
+      border: solid 1.4px $white;
+      width: 145px;
+      height: 117px;
+      color: $aqua-blue;
+      font-weight: normal;
+      font-size: 13px;
+      padding: 15px 20px 20px 20px;
+
+      .icon{
+        margin: 0 auto 12px auto;
+        text-align: center;
+        color:#8093a5;
+      }
+
+      &.selected{
+        color: $navy-blue;
+        border: solid 1.4px $aqua-blue;
+        background-color: rgba(214, 232, 244, 0.35);
+
+        .icon{
+          color: $navy-blue;
+        }
+      }
+  }
+  @else if $type == orange {
+    text-transform: uppercase;
+    color:white;
+    text-align: center;
+    width: 168px;
+    min-height: 50px;
+    @include border-radius(3px);
+    background-image: linear-gradient(to bottom, #ff7724, $orange-red), linear-gradient(#ff7724, $orange-red);
+    padding: 15px 20px;
+    font-size: 16px;
+    font-family: $font-franklinCondense;
+    border:none;
+    text-transform: uppercase;
+    @include font-size($mig-font-m,false);
+    @include line-height($mig-font-m + 2);
+    vertical-align: middle;
+    @include mig-custom-fonts(condensedDemi);
+    @include transition($orange-red 300ms);
+    @include transition-duration(.3s);
+    @include transition-timing-function(ease-in);
+    @include breakpoint(small){
+      width: 130px;
+    }
+
+    &:hover{
+      background: $orange-red;
+    }
+
+    &:disabled, &.disabled{
+      background:$grey-m;
+      cursor: text !important;
+    }
+  }
+  @else if $type= orangeAlt{
+    text-transform: uppercase;
+    color:$orange-red;
+    text-align: center;
+    width: 168px;
+    min-height: 50px;
+    background:$white;
+    padding: 15px 20px;
+    font-family: $font-franklinCondense;
+    font-weight: 700;
+    border:none;
+    text-transform: uppercase;
+    @include font-size($mig-font-m,false);
+    @include line-height($mig-font-m+2);
+    vertical-align: middle;
+    @include mig-custom-fonts(condensedDemi);
+    @include breakpoint(small){
+      width: 100px;
+    }
+
+    &:hover{
+      text-decoration: underline;
+    }
+
+    &:disabled, &.disabled{
+      background:transparent;
+      border:none;
+      color:$grey-m;
+      cursor: text !important;
+    }
+  }
+  @else if $type == gray {
+    text-transform: uppercase;
+    text-align: center;
+    background: #c4bfb6;
+    @include border-radius(3px);
+    min-height: 50px;
+    padding: 20px;
+    color: $white;
+    font-size: 12px;
+  }
+}
+
+// @mixin mig-button-with-icon($type, $width, $iconNormal, $iconHover, $offsetX, $offsetY){
+//   @if $width > 0px {
+//         @include mig-button($type, $width);
+
+//      } @else {
+//         @include mig-button($type)
+//      }
+//      padding: 10px 14px 10px 39px;
+//      background: $white sprite($migButton-sprite, $iconNormal, $offsetX, $offsetY) no-repeat;
+//    &:hover,
+//    &.is-active {
+//      text-decoration:none;
+//      color:$white;
+//      background: $greybuttontext sprite($migButton-sprite, $iconHover, $offsetX, $offsetY) no-repeat;
+//    }
+// }
+
+@mixin triangle($direction: left, $size: 25px, $color: #0A407D) {
+    width:0;
+    height:0;
+    border: $size solid transparent;
+    color:transparent;
+
+    @if $direction == "left" {
+        border-right-color: $color;
+    }
+
+    @if $direction == "right" {
+        border-left-color: $color;
+    }
+
+    @if $direction == "up" {
+        border-bottom-color: $color;
+    }
+
+    @if $direction == "down" {
+        border-top-color: $color;
+    }
+}
+
+@mixin wedge($direction: topRight, $size:15px, $color:#5D0B17){
+    width:0;
+    height:0;
+    color: transparent;
+
+    @if $direction == "topLeft" {
+        border-top: $size solid $color;
+        border-right: $size solid transparent;
+    }
+
+    @if $direction == "topRight" {
+        border-top: $size solid $color;
+        border-left: $size solid transparent;
+    }
+
+    @if $direction == "bottomLeft" {
+        border-bottom: $size solid $color;
+        border-right: $size solid transparent;
+    }
+
+    @if $direction == "bottomRight" {
+        border-bottom: $size solid $color;
+        border-left: $size solid transparent;
+    }
+}
+
+@mixin inline-block($aligment: middle) {
+     display: inline-block;
+     vertical-align: $aligment;
+
+  *text-indent:0!important;
+  *display: inline;
+  *zoom: 1;
+}
+
+@mixin replace-text(){
+  display:block;
+  overflow:hidden;
+  outline:none;
+  text-indent:-9999px;
+}
+
+@mixin keyframes($animationName){
+    @-webkit-keyframes $animationName {
+        @content;
+    }
+    @-moz-keyframes $animationName {
+        @content;
+    }
+    @-o-keyframes $animationName {
+        @content;
+    }
+    @-ms-keyframes $animationName {
+        @content;
+    }
+    @keyframes $animationName {
+        @content;
+    }
+}
+
+@mixin animation($name, $duration: 0.5s, $delay:0s, $timing:linear, $count:1, $direction:normal) {
+  -webkit-animation: $name $duration $timing $delay $count $direction;
+  -moz-animation: $name $duration $timing $delay $count $direction;
+  -ms-animation: $name $duration $timing $delay $count $direction;
+  -o-animation: $name $duration $timing $delay $count $direction;
+  animation: $name $duration $timing $delay $count $direction;
+}
+
+@mixin breakpoint($point) {
+  @if $point == large {
+    @media (min-width: 64.375em) { @content; }
+  }
+  @else if $point == mobile {
+    @media (max-width: 768px) { @content; }
+  }
+  @else if $point == ipad {
+    @media (min-width : 768px) and (max-width : 1024px)  { @content; }
+  }
+  @else if $point == ipadp {
+    @media (min-width : 768px) 
+    and (max-width : 1024px) 
+    and (orientation : portrait) { @content; }
+  }
+  @else if $point == ipadl {
+    @media (min-width : 768px) 
+    and (max-width : 1024px) 
+    and (orientation : landscape) { @content; }
+  }
+  @else if $point == small {
+    @media (max-width: 767px)  { @content; }
+  }
+  @else if $point == xsmall0 {
+    @media (max-width: 416px)  { @content; }
+  }
+  @else if $point == xsmall {
+    @media (max-width: 405px)  { @content; }
+  }
+  @else if $point == retina {
+    @media (-webkit-min-device-pixel-ratio: 2),(-o-min-device-pixel-ratio: 3 / 2),(min-device-pixel-ratio: 2)  { @content; }
+  }
+  @else if $point == iphone4l {
+    @media (min-width: 320px)
+    and (max-width: 480px)
+    and (-webkit-min-device-pixel-ratio: 2)
+    and (orientation: landscape) {
+      @content;
+    }
+  }
+
+  @else if $point == iphone5l {
+  @media (min-width: 320px)
+    and (max-width: 568px)
+    and (-webkit-min-device-pixel-ratio: 2)
+    and (orientation: landscape) {
+      @content;
+    }
+  }
+
+  @else if $point == iphone6l {
+    @media (min-width: 375px)
+    and (max-width: 667px)
+    and (-webkit-min-device-pixel-ratio: 2)
+    and (orientation: landscape) {
+       @content;
+    }
+  }
+
+  @else if $point == iphone6pl {
+    @media  (min-width: 414px)
+    and (max-width: 736px)
+    and (-webkit-min-device-pixel-ratio: 3)
+    and (orientation: landscape) {
+       @content;
+    }
+  }
+
+ @else if $point == samsungfp {
+    @media (min-width: 360px)
+    and (min-height: 640px)
+    and (-webkit-device-pixel-ratio: 3)
+    and (orientation: portrait) {
+    @content;
+    }
+  }
+
+  @else if $point == samsungfl {
+    @media  (min-width: 360px)
+    and (min-height: 640px)
+    and (-webkit-device-pixel-ratio: 3)
+    and (orientation: landscape) {
+    @content;
+    }
+  }
+
+  @else if $point == htcl{
+      @media (min-width: 360px)
+      and (min-height: 640px)
+      and (-webkit-device-pixel-ratio: 3)
+      and (orientation: landscape) {
+         @content;
+    }
+  }
+
+  @else if $point == nexus5xl{
+      @media (min-width: 412px)
+      and (min-height: 732px) 
+      and (orientation: landscape) {
+         @content;
+    }
+  }
+}
+
+@mixin mig-custom-fonts($fontFamily){
+  @if $fontFamily == urwMedium{
+    font-family: $font-franklinGothicURW;
+    @extend .tk-franklin-gothic-urw !optional;
+    font-weight: 300;
+  }
+  @else if $fontFamily == urwMedium400{
+    font-family: $font-franklinGothicURW;
+    @extend .tk-franklin-gothic-urw !optional;
+    font-weight: 400;
+  }
+  @else if $fontFamily == urwMedium500{
+    font-family: $font-franklinGothicURW;
+    @extend .tk-franklin-gothic-urw !optional;
+    font-weight: 500;
+  }
+  @else if $fontFamily == condensedDemi{
+    font-family: $font-franklinCondense;
+    @extend .tk-franklin-gothic-urw-cond !optional;
+    font-weight: 700;
+  }
+  @else if $fontFamily == arial{
+    font-family: $font-arial;
+    font-weight: 300;
+  }
+  @else if $fontFamily == arial500{
+    font-family: $font-arial;
+    font-weight: 500;
+  }
+  @else if $fontFamily == arial700{
+    font-family: $font-arial;
+    font-weight: 700;
+  }
+}
+
+@mixin styled-text($color: '$navy-blue', $font-size:$mig-font-default, $line-height:$mig-font-default ,$custom-font: urwMedium, $transformation: null) {
+    color:$color;
+    @include font-size($font-size);
+    @include line-height($line-height);
+    @include mig-custom-fonts($custom-font);
+    @if ($transformation) {
+       text-transform: $transformation;
+    }
+
+}
+
+@mixin transition($args) {
+  -webkit-transition: $args;
+  -moz-transition: $args;
+  -ms-transition: $args;
+  -o-transition: $args;
+  transition: $args;
+}
+
+@mixin transition-property($property...) {
+    -moz-transition-property:    $property;
+    -o-transition-property:      $property;
+    -webkit-transition-property: $property;
+    transition-property:         $property;
+}
+@mixin transition-duration($duration...) {
+    -moz-transition-property:    $duration;
+    -o-transition-property:      $duration;
+    -webkit-transition-property: $duration;
+    transition-property:         $duration;
+}
+@mixin transition-timing-function($timing...) {
+    -moz-transition-timing-function:    $timing;
+    -o-transition-timing-function:      $timing;
+    -webkit-transition-timing-function: $timing;
+    transition-timing-function:         $timing;
+}
+@mixin transition-delay($delay...) {
+    -moz-transition-delay:    $delay;
+    -o-transition-delay:      $delay;
+    -webkit-transition-delay: $delay;
+    transition-delay:         $delay;
+}
+
+@mixin flexbox() {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+}
+@mixin input-wrapper($type) {
+  @if $type == select{
+    margin-bottom: 30*0.75+px;
+  }
+  @else if $type == common-light-blue-grey-border{
+    margin-bottom: 20*0.75+px;
+  }
+  @else if $type == form{
+    margin-bottom: 0px;
+  }
+  @else if $type == radios{
+    //25
+    margin-bottom: 25*0.75+px;
+  }
+  @else if $type == md-checkbox{
+    margin-bottom: 16*0.75+px;
+  }
+  @else if $type == text{
+    //30--0.75*30 --15+7.5
+    margin-bottom: 7.5px;
+  }
+  @else if $type == nbs-datepicker{
+    margin-bottom: 30*0.75+px;
+  }
+  @else if $type == readonly-text{
+    margin-bottom: 17.5px;
+  }
+}
+@mixin padding($valueTop,$valueLeft,$valueBottom:null,$valueRight:null) {
+  @if $valueBottom == null{
+    padding:$valueTop*0.75+px $valueLeft+px;
+  }
+  @else if $valueBottom != null{
+    padding:$valueTop*0.75+px $valueLeft+px $valueBottom*0.75+px $valueRight+px;
+  }
+}
+
