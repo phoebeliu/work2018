@@ -208,6 +208,75 @@ define([],
         }]
 
     })
+////////////////new scroll////////////
+/* these comment are the ways i find to scroll end or scroll to top or animate end
+*but all failed
+*so i wrote back to top in the directive not outside and find a way to callback
+*angulat.animate don't have callback
+*so does window.scroll
+*so this time i have to say thanks for jQuery
+*/
+if($scope.useNewError === true){
+    // refresh and add watchers for new errors
+   // var migScrollToTop = false;
+    //$scope.isScrolling = false;
+    var errors = _.where($scope.validations, {type: 'error'});
+    if(errors.length != $scope.validations.length){
+        console.log("$scope.validations are not all errors!");
+    }
+    validationProcessor.freshErrors(errors);
+    //$scope.screenObj.toggleValidationResults=true;
+    // var scrollTopEvent = new Promise(function(resolve, reject) {
+    //     angular.element('html, body').animate({ scrollTop: 0 }, 'slow');
+    //     console.log('www');
+    // });
+    // scrollTopEvent.then(function() {
+    //     $scope.screenObj.toggleValidationResults=true;
+    //     $scope.$apply();
+    //     console.log('1111');
+    //     // expected output: "foo"
+    // });
+    $('html, body').animate({scrollTop:0}, 'slow', function(){
+        //callback after animate
+        $scope.screenObj.toggleValidationResults=true;
+        $scope.$apply();
+        console.log('1111');
+    });
+    // angular.element('html, body').animate({ scrollTop: 0 }, 'slow').then(function(){
+    //     $scope.screenObj.toggleValidationResults=true;
+    //     console.log("Animation stopped");
+    // });
+    // document.querySelector('html, body').onanimationstart = function(event) {
+    //     console.log("Animation stopped", event);
+    //     if(migScrollToTop==true){
+    //         $scope.screenObj.toggleValidationResults=true;
+    //         $scope.$apply();
+    //     };
+    // };
+
+    // var  scrollWatch = $scope.$watch(function(){
+    //     return migScrollToTop;
+    // }, function(val,oldVal){
+    //     if(val!=oldVal && migScrollToTop==true){
+    //         $scope.screenObj.toggleValidationResults=true;
+    //         scrollWatch();
+    //     };
+    // });
+}
+
+
+
+
+$window.onscroll = function(){
+    if(document.querySelector('#lineValidationDiv.new-line-validation')){
+        checkOffset();
+    }
+};
+
+                       
+
+
+
 
 
 
