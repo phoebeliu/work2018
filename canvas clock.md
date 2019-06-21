@@ -214,3 +214,42 @@ c.stroke();
 
 This piece of code checks whether a borderwidth has been set in the options and if it has, it draws an [arc](http://www.w3schools.com/tags/canvas_arc.asp) with its origin at the centre (0,0), a radius of the size of the clock (minus the width of the line to account for the line itself), starting at angle 0 and progressing 2 pi radians (360 degrees).
 
+## Tick Marks
+
+![img](http://howtodrawaclock.appspot.com/assets/zoom2.png)
+
+In the image above, "a" is the tick length, "b" is the gap and "c" is the width.
+
+It makes sense then to `moveTo` the outer end first and then draw a line inwards towrds the centre.
+
+To make the little tick marks, we should start at zero rotation and then rotate by 2*PI/n radians (where n is the number of tick marks required) between each tick mark. Let's see what that looks like:
+
+```js
+//Tick Marks
+if (parseInt(opt.ticknumber, 10) > 0) {
+for (i = 0; i < parseInt(opt.ticknumber, 10); i++) {
+c.beginPath();
+c.lineWidth = size * opt.tickwidth / 100;
+c.moveTo(0, size - (size * opt.borderWidth / 100) - (size * opt.tickgap / 100));
+c.lineTo(0, size - (size * opt.borderWidth / 100) - (size * opt.tickgap / 100) - (size * opt.ticklen / 100));
+c.stroke();
+c.rotate((2 * Math.PI) / opt.ticknumber);
+}
+}
+```
+
+> 这里没懂，为什么是(2 * Math.PI) / opt.ticknumber？？？？？
+
+This where wrapping the logic to draw the clock within a function really pays off because we can simply use `setInterval` to update the clock every second like this:
+
+```js
+setInterval(paintClock, 1000);
+```
+
+Easy peasy.
+
+https://diveintohtml5.info/canvas.html
+
+
+
+看完以后还是有点懵逼，就这个数字不知道咋摆的。
