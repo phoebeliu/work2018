@@ -71,3 +71,4 @@ ctx.fillStyle = 'red';
 ctx.fillRect(80, 60, 140, 30);
 ```
 
+<http://howtodrawaclock.appspot.com/html/page1.html>
