@@ -253,3 +253,63 @@ https://diveintohtml5.info/canvas.html
 
 
 看完以后还是有点懵逼，就这个数字不知道咋摆的。
+
+```js
+function drawNumbers(ctx, radius) {
+  var ang;
+  var num;
+  ctx.font = radius * 0.15 + "px arial";
+  ctx.textBaseline = "middle";
+  ctx.textAlign = "center";
+  for(num = 1; num < 13; num++){
+    ang = num * Math.PI / 6;
+    ctx.rotate(ang);
+    ctx.translate(0, -radius * 0.85);
+    ctx.rotate(-ang);
+    ctx.fillText(num.toString(), 0, 0);
+    ctx.rotate(ang);
+    ctx.translate(0, radius * 0.85);
+    ctx.rotate(-ang);
+  }
+}
+```
+
+
+
+
+
+```js
+CanvasRenderingContext2D.fillText(text, x, y [, maxWidth]);
+```
+
+### Parameters[Section](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/fillText#Parameters)
+
+- `text`
+
+  A [`DOMString`](https://developer.mozilla.org/en-US/docs/Web/API/DOMString) specifying the text string to render into the context. The text is rendered using the settings specified by [`font`](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/font), [`textAlign`](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/textAlign), [`textBaseline`](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/textBaseline), and [`direction`](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/direction).
+
+- `x`
+
+  The x-axis coordinate of the point at which to begin drawing the text, in pixels.
+
+- `y`
+
+  The y-axis coordinate of the point at which to begin drawing the text, in pixels.
+
+```js
+void ctx.translate(x, y);
+```
+
+The `translate()` method adds a translation transformation to the current matrix by moving the canvas and its origin `x` units horizontally and `y` units vertically on the grid.
+
+![img](https://mdn.mozillademos.org/files/234/Canvas_grid_translate.png)
+
+### Parameters[Section](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/translate#Parameters)
+
+- `x`
+
+  Distance to move in the horizontal direction. Positive values are to the right, and negative to the left.
+
+- `y`
+
+  Distance to move in the vertical direction. Positive values are down, and negative are up.
