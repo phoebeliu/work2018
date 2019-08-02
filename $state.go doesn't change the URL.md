@@ -1,5 +1,9 @@
 # $state.go doesn't change the URL and $viewContentLoaded and $stateChangeSuccess and $locationChangeSuccess
 
+首先state go 走完，state先不变，走完之后的方法后变state，变完state 走$viewContentLoaded 然后最后才会更改URL
+
+after $state.go ,$state change and than $viewContentLoaded call and finially change the URL.
+
 1.THIS IS WHY $state change but url not change,in the same controller call servel times $state.go
 
 The problem was logic in my code, I was calling `$state.go` from another controller, then calling `$state.go` again (accidentally) in that controller. This was not a bug in UI-Router. 
