@@ -6,26 +6,56 @@ let users = [
   { username: 'Lily', age: 19, gender: 'female' , comment:'maybe there are a lot of pens.'},
   { username: 'Lucy', age: 20, gender: 'female' , comment:'maybe there are a lot of children.'}
 ]
-
+let missingFileds = '';
 class AddComment extends Component {
-    submitForm () {
-        console.log('userName');
-        this.setState({
-            usersList: this.props.users
-        })
+    constructor () {
+        super()
+        this.state = { showResults: false }
+      }
+    showError(show) {
+        this.setState({ showResults: show });
+    }
+    onSubmit (e) {
+        //document.comment.submit();
+        e.preventDefault();// prevent page refresh
+        let addUserComment = {};
+        addUserComment.username = document.comment.userName.value;
+        addUserComment.comment = document.comment.userComment.value;
+        if(!document.comment.userComment.value && !document.comment.userName.value){
+            missingFileds = 'User Name and Comment';
+            this.showError(true);
+        }else if(!document.comment.userName.value){
+            missingFileds = 'User Name';
+            this.showError(true);
+        }else if(!document.comment.userComment.value){
+            missingFileds = 'Comment';
+            this.showError(true);
+        }else{
+            this.showError(false);
+            this.props.handleAdd(addUserComment);
+            document.comment.reset();
+        }
+        // this.setState({
+        //     usersList: this.props.users
+        // })
+        // this.setState(users => ({
+        //     usersList: [...users, addUserComment]
+        // }));
+        // let joined = this.props.users.concat(addUserComment);
+        // this.setState({ usersList: joined })
+        
+        //console.log(this.state.usersList + 'userName');
     
         // this.props.likedText = '取消'
-    
-    
-        if (this.props.onClick) {
-          this.props.onClick()
-        }
+        // { this.state.showResults ? <div class="alert alert-danger" role="alert">{missingFileds} : is missing.</div> : null }
     }
     render () {
-      let { users } = this.props.users
 
       return (
-        <form className="clearfix">
+        <>
+        <div role="alert" className={'alert alert-danger ' + (this.state.showResults ? '' : 'd-none')}>{missingFileds} : is missing.</div> 
+        
+        <form className="clearfix" name="comment">
         <div className="form-group row">
             <label htmlFor="userName" className="col-sm-4 col-form-label">User Name : </label>
             <div className="col-sm-8">
@@ -39,8 +69,9 @@ class AddComment extends Component {
             </div>
         </div>
         
-        <button type="submit" className="btn btn-primary btn-lg float-right" onClick={this.submitForm.bind(this)}>Submit</button>
+        <button className="btn btn-primary btn-lg float-right" type="submit" onClick={this.onSubmit.bind(this)}>Submit</button>
         </form>
+        </>
       )
     }
   }
@@ -64,7 +95,11 @@ class Comment extends Component {
         super()
         this.state = { usersList:  users  }
     }
-  render () {
+    addUserComment (newComment) {
+        let newOne = this.state.usersList.concat(newComment);
+        this.setState({ usersList: newOne })
+      }
+    render () {
     return (
     <>
     <nav className="navbar navbar-light bg-light">
@@ -77,11 +112,11 @@ class Comment extends Component {
             Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus.
             </p>
             <div className="shadow-sm p-3 mb-5 bg-white rounded">
-            <AddComment users={this.state.usersList}></AddComment>
+            <AddComment users={this.state.usersList} handleAdd={this.addUserComment.bind(this)}></AddComment>
             </div>
         </section>
         <hr/>
-        <section>
+        <section className="pb-3">
             <h1 className="text-center mt-3">Comment List</h1>
             <p className="lead">
             Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus.
@@ -98,7 +133,7 @@ class Comment extends Component {
     </div>
     </>
     )
-  }
+    }
 }
 
 export default Comment;
