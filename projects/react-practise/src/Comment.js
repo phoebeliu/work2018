@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 
 let users = [
   { username: 'Jerry', age: 21, gender: 'male', comment:'maybe there are a lot of apples.'},
@@ -206,15 +207,18 @@ class CommentDetail extends Component{
 }
 
 class CommentList extends Component {
-  render () {
-    let { users } = this.props
-    return (
-        <ul className="list-group">
-            {/* {users.map((user) => <User user={user} />)} */}
-            {users.map((user, i) => <CommentDetail key={i} user={user} />)}
-        </ul>
-    )
-  }
+    static defaultProps = {
+        users: []
+    }
+    render () {
+        let { users } = this.props
+        return (
+            <ul className="list-group">
+                {/* {users.map((user) => <User user={user} />)} */}
+                {users.map((user, i) => <CommentDetail key={i} user={user} />)}
+            </ul>
+        )
+    }
 }
 
 class Comment extends Component {
