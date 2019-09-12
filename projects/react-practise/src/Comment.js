@@ -47,8 +47,8 @@ class DataInput extends Component{
     }
     clearUp(){
         let input = this.state.inputObj;
-        //input.value = '';
-        input.value = 'what happened';
+        input.value = '';
+        //input.value = 'what happened';
         this.setState({ inputObj : input });
         this.props.updateFunc(this.state.inputObj,true);
     }
@@ -61,12 +61,12 @@ class DataInput extends Component{
     renderSwitchInputType(param) {
         switch(param.type) {
           case 'text':
-            return <input type="text" className="form-control" id={param.id} value={this.state.inputObj[param.value]} onChange={this.handleChange.bind(this)}></input>;//{this.state[param.value]} will trigger error 'changing an uncontrolled input'
+            return <input type="text" className="form-control" id={param.id} value={this.state.inputObj.value} onChange={this.handleChange.bind(this)}></input>;//{this.state[param.value]} will trigger error 'changing an uncontrolled input'
             //added {this.state[param.value] || ''}
             //than has init state so remove || ''
-            //{this.state.inputObj[param.value]}
+            //{this.state.inputObj[param.value]}--> this is {this.state.inputObj.''} i forget change this
           case 'textarea':
-            return <textarea className="form-control" id={param.id} value={this.state.inputObj[param.value]} onChange={this.handleChange.bind(this)} rows="3"></textarea>;
+            return <textarea className="form-control" id={param.id} value={this.state.inputObj.value} onChange={this.handleChange.bind(this)} rows="3"></textarea>;
 
           default:
             return <input type="text" className="form-control"></input>;
@@ -93,7 +93,7 @@ class DataInput extends Component{
             <div className="col-sm-8">
                 {this.renderSwitchInputType(inputObjData)}
             </div>
-            <button onClick={this.clearThis.bind(this)} >clear</button>
+            {/* <button onClick={this.clearThis.bind(this)} >clear</button> */}
         </div>
         )
     }
