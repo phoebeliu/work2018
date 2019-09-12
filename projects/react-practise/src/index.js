@@ -13,8 +13,8 @@ import 'bootstrap/dist/css/bootstrap.css';
 import Index from './LifeCycle2';
 
 // ReactDOM.render(<App />, document.getElementById('root'));
-//ReactDOM.render(<Comment />, document.getElementById('root'));
-ReactDOM.render(<Index />, document.getElementById('root'));
+ReactDOM.render(<Comment />, document.getElementById('root'));
+// ReactDOM.render(<Index />, document.getElementById('root'));
 // ReactDOM.render(<ComponentIndex />, document.getElementById('root'));
 
 // ReactDOM.render(<LikeButton />, document.getElementById('root'));

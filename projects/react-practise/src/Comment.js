@@ -51,13 +51,15 @@ class DataInput extends Component{
         input.value = '';
         //input.value = 'what happened';
         this.setState({ inputObj : input });
-        this.props.updateFunc(this.state.inputObj,true);
+        //this.props.updateFunc(this.state.inputObj,true);
     }
     handleChange(event) {
         let input = this.state.inputObj;
         input.value = event.target.value;
         this.setState({ inputObj : input });
-        this.props.updateFunc(this.state.inputObj,true);
+        //this.props.updateFunc(this.state.inputObj,true);
+        //because state = props so they change together
+        //reference types so react is just assign not deep copy another one
     }
     renderSwitchInputType(param) {
         switch(param.type) {
@@ -78,7 +80,7 @@ class DataInput extends Component{
         let input = this.state.inputObj;
         input.value = '';
         this.setState({ inputObj : input });
-        this.props.updateFunc(this.state.inputObj,true);
+        //this.props.updateFunc(this.state.inputObj,true);
     }
     //inputObj={
     //'id': 'userName',
@@ -133,15 +135,17 @@ class AddComment extends Component {
         //document.comment.submit();
         e.preventDefault();// prevent page refresh
         let addUserComment = {};
-        addUserComment.username = document.comment.userName.value;
-        addUserComment.comment = document.comment.userComment.value;
-        if(!document.comment.userComment.value && !document.comment.userName.value){
+        // addUserComment.username = document.comment.userName.value;
+        // addUserComment.comment = document.comment.userComment.value;
+        addUserComment.username = this.state.inputObj[0].value;
+        addUserComment.comment = this.state.inputObj[1].value;
+        if(addUserComment.username.length <= 0 && addUserComment.comment.length <= 0){
             missingFileds = 'User Name and Comment';
             this.showError(true);
-        }else if(!document.comment.userName.value){
+        }else if(addUserComment.username.length <= 0){
             missingFileds = 'User Name';
             this.showError(true);
-        }else if(!document.comment.userComment.value){
+        }else if(addUserComment.comment.length <= 0){
             missingFileds = 'Comment';
             this.showError(true);
         }else{
