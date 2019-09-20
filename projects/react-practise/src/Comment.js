@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import { Remarkable } from 'remarkable';
 
 let users = [
   { username: 'Jerry', age: 21, gender: 'male', comment:'maybe there are a lot of apples.'},
@@ -53,6 +54,9 @@ class DataInput extends Component{
         this.setState({ inputObj : input });
         //this.props.updateFunc(this.state.inputObj,true);
     }
+    focus(){
+        this.input.focus();
+    }
     handleChange(event) {
         let input = this.state.inputObj;
         input.value = event.target.value;
@@ -60,19 +64,21 @@ class DataInput extends Component{
         //this.props.updateFunc(this.state.inputObj,true);
         //because state = props so they change together
         //reference types so react is just assign not deep copy another one
+        //after first time clear,second time will fail so need to rebind
+        this.props.updateFunc(this.state.inputObj,true);
     }
     renderSwitchInputType(param) {
         switch(param.type) {
           case 'text':
-            return <input type="text" className="form-control" id={param.id} value={this.state.inputObj.value} onChange={this.handleChange.bind(this)}></input>;//{this.state[param.value]} will trigger error 'changing an uncontrolled input'
+            return <input type="text" className="form-control" id={param.id} value={this.state.inputObj.value} onChange={this.handleChange.bind(this)} ref={(input)=>{this.input = input}}></input>;//{this.state[param.value]} will trigger error 'changing an uncontrolled input'
             //added {this.state[param.value] || ''}
             //than has init state so remove || ''
             //{this.state.inputObj[param.value]}--> this is {this.state.inputObj.''} i forget change this
           case 'textarea':
-            return <textarea className="form-control" id={param.id} value={this.state.inputObj.value} onChange={this.handleChange.bind(this)} rows="3"></textarea>;
+            return <textarea className="form-control" id={param.id} value={this.state.inputObj.value} onChange={this.handleChange.bind(this)} rows="3" ref={(input)=>{this.input = input}}></textarea>;
 
           default:
-            return <input type="text" className="form-control"></input>;
+            return <input type="text" className="form-control" ref={(input)=>{this.input = input}}></input>;
         }
     }
     clearThis(e) {
@@ -111,6 +117,17 @@ class AddComment extends Component {
             userNameData : ''   
         }
     }
+    componentWillMount() {
+        let cat = localStorage.getItem('myCat');
+        let dummyObj = this.state.inputObj;
+        dummyObj[0].value = cat;
+        this.setState({ inputObj:dummyObj});
+    }
+    componentDidMount() {
+        if(this['inputComponent1']){
+            this['inputComponent1'].focus();
+        }
+    }
     updateCommentValue (newCommentData,method){
         if(method){//add
             let dummyObj = this.state.inputObj;
@@ -123,9 +140,14 @@ class AddComment extends Component {
         }else{//clear
             console.log('clear');
             this.setState({ inputObj: initInputArrayData,commentData : '1111' });
+            
             for (let i = 0; i < this.state.inputObj.length; i++) {
                 this[`inputComponent${i}`].clearUp();
             } 
+            let cat1 = localStorage.getItem('myCat');
+            let dummyObj1 = this.state.inputObj;
+            dummyObj1[0].value = cat1;
+            this.setState({ inputObj:dummyObj1});
         }
     }
     showError(show) {
@@ -197,13 +219,57 @@ class AddComment extends Component {
 }
 
 class CommentDetail extends Component{
+    constructor (props) {
+        super(props)
+        this.state = { timeGap : '' }
+    }
+    msToTime(millisec) {
+        console.log(millisec);
+        var seconds = (millisec / 1000).toFixed(1);
+        var minutes = (millisec / (1000 * 60)).toFixed(1);
+        var hours = (millisec / (1000 * 60 * 60)).toFixed(1);
+        var days = (millisec / (1000 * 60 * 60 * 24)).toFixed(1);
+        if (seconds < 60) {
+            return seconds + " Sec";
+        } else if (minutes < 60) {
+            return minutes + " Min";
+        } else if (hours < 24) {
+            return hours + " Hrs";
+        } else {
+            return days + " Days"
+        }
+    }
+    getTimeGap(time){
+        if(!time) return;
+        time = Date.parse(time);
+        let now = Date.now();
+        console.log(time);
+        //console.log(now.toDateString());
+        return this.msToTime(now - time);
+    }
+    componentDidMount() {
+        console.log(this.props.user.username+'start');
+        this.timer = setInterval(() => {
+            console.log(this.props.user.username+'update');
+            this.setState({ timeGap: this.getTimeGap(this.props.user.time) })
+        }, 60000)
+    }
+    componentWillUnmount() {
+        clearInterval(this.timer);
+    }
+    removeUserCommentCD () {
+        this.props.removeFn();
+    }
     render(){
-        let { user } = this.props
+        let { user } = this.props;
+        let md = new Remarkable('commonmark');
         return (
             <li className="list-group-item border-info">
-                <div className="p-3">
+                <div className="row p-3">
                     <b className="col-3">{user.username} : </b>
-                    <span className="col-9">{user.comment}</span>
+                    <span className="col-4" dangerouslySetInnerHTML={{__html:md.render(user.comment)}}></span>
+                    <span className="col-3">{this.state.timeGap}</span>
+                    <button type="button" className="btn btn-primary col-2" onClick={this.removeUserCommentCD.bind(this)}>Delete</button>
                 </div>
             </li>
         )
@@ -211,15 +277,21 @@ class CommentDetail extends Component{
 }
 
 class CommentList extends Component {
+    static propTypes = {
+        users: PropTypes.array.isRequired
+    }
     static defaultProps = {
         users: []
+    }
+    removeUserCommentCL(index) {
+        this.props.removeFn(index);
     }
     render () {
         let { users } = this.props
         return (
             <ul className="list-group">
                 {/* {users.map((user) => <User user={user} />)} */}
-                {users.map((user, i) => <CommentDetail key={i} user={user} />)}
+                {users.map((user, i) => <CommentDetail key={i} user={user} removeFn={this.removeUserCommentCL.bind(this)}/>)}
             </ul>
         )
     }
@@ -229,11 +301,21 @@ class Comment extends Component {
     constructor () {
         super()
         this.state = { usersList:  users  }
+        localStorage.setItem('myCat', 'Tom');
+        localStorage.setItem('listOfComment', users);
     }
     addUserComment (newComment) {
+        newComment.time = new Date().toDateString();
         let newOne = this.state.usersList.concat(newComment);
+        localStorage.setItem('listOfComment', newOne);
         this.setState({ usersList: newOne })
-      }
+    }
+    removeUserComment (index) {
+        let newOne = this.state.usersList;
+        newOne.splice(index,1);
+        localStorage.setItem('listOfComment', newOne);
+        this.setState({ usersList: newOne })
+    }
     render () {
     return (
     <>
@@ -258,7 +340,7 @@ class Comment extends Component {
             </p>
             <div className="row justify-content-md-center bg-light pt-3">
                 <div className="col-sm">
-                    <CommentList users={this.state.usersList} />
+                    <CommentList users={this.state.usersList} removeFn={this.removeUserComment.bind(this)}/>
                 </div>
             </div>
         </section>
