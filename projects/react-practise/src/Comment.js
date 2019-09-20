@@ -137,6 +137,7 @@ class AddComment extends Component {
                 dummyObj[1].value = newCommentData.value;
             }
             this.setState({ inputObj:dummyObj});
+            localStorage.setItem('myCat', dummyObj[0].value);
         }else{//clear
             console.log('clear');
             this.setState({ inputObj: initInputArrayData,commentData : '1111' });
@@ -225,24 +226,16 @@ class CommentDetail extends Component{
     }
     msToTime(millisec) {
         console.log(millisec);
-        var seconds = (millisec / 1000).toFixed(1);
-        var minutes = (millisec / (1000 * 60)).toFixed(1);
-        var hours = (millisec / (1000 * 60 * 60)).toFixed(1);
-        var days = (millisec / (1000 * 60 * 60 * 24)).toFixed(1);
-        if (seconds < 60) {
-            return seconds + " Sec";
-        } else if (minutes < 60) {
-            return minutes + " Min";
-        } else if (hours < 24) {
-            return hours + " Hrs";
-        } else {
-            return days + " Days"
-        }
+        millisec = millisec / 1000;
+        return millisec > 60
+        ? `${Math.round(millisec / 60)} minuts before`
+        : `${Math.round(Math.max(millisec, 1))} seconds before`;
     }
     getTimeGap(time){
         if(!time) return;
-        time = Date.parse(time);
-        let now = Date.now();
+        // time = Date.parse(time);
+        // let now = Date.now();
+        let now = +Date.now();
         console.log(time);
         //console.log(now.toDateString());
         return this.msToTime(now - time);
@@ -258,7 +251,9 @@ class CommentDetail extends Component{
         clearInterval(this.timer);
     }
     removeUserCommentCD () {
-        this.props.removeFn();
+        if(this.props.removeFn){
+            this.props.removeFn();
+        } 
     }
     render(){
         let { user } = this.props;
@@ -278,13 +273,16 @@ class CommentDetail extends Component{
 
 class CommentList extends Component {
     static propTypes = {
-        users: PropTypes.array.isRequired
+        users: PropTypes.array.isRequired,
+        removeFn: PropTypes.func
     }
     static defaultProps = {
         users: []
     }
     removeUserCommentCL(index) {
-        this.props.removeFn(index);
+        if(this.props.removeFn){
+            this.props.removeFn(index);
+        }  
     }
     render () {
         let { users } = this.props
@@ -305,7 +303,8 @@ class Comment extends Component {
         localStorage.setItem('listOfComment', users);
     }
     addUserComment (newComment) {
-        newComment.time = new Date().toDateString();
+        //newComment.time = new Date().toDateString();
+        newComment.time = +new Date();
         let newOne = this.state.usersList.concat(newComment);
         localStorage.setItem('listOfComment', newOne);
         this.setState({ usersList: newOne })
