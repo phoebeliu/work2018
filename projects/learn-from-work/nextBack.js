@@ -74,6 +74,13 @@ define(['text!./templates/next-and-back.html', 'underscore'],
                     $scope.custom = typeof $scope.custom !== 'undefined' ? $scope.custom : false;
                     $scope.payissueDisabled = typeof $scope.payissueDisabled !== 'undefined' ? $scope.payissueDisabled : false;
                     $scope.saveDisabled = typeof $scope.saveDisabled !== 'undefined' ? $scope.saveDisabled : false;
+                    if(_.isFunction($scope.popSaveDisabled)){
+                        $scope.$watch($scope.popSaveDisabled, function(value){
+                            $scope.popSaveDisabledValue = value;
+                        });
+                    }else{
+                        $scope.popSaveDisabledValue = $scope.popSaveDisabled;
+                    }
 
                     $scope.savePopUp =function(){
                         $scope.popSaveFn();
