@@ -1,0 +1,65 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+.hide{
+    display: none;
+}
+body{
+    min-height: 100vh;
+    position: relative;
+}
+.mt-10{
+    margin-top: 10px!important;
+}
+.row{
+    margin: 0 auto;
+    width: 100%;
+}
+.right{
+  float: right;  
+}
+.text-align-center{
+    text-align: center;
+}
+.inline{
+    display: inline-block;
+}
+.pagination{
+    margin: 0 auto;
+}
+.full-width{
+    width: 100%;
+}
+.popup-modal-wrapper{
+    position: fixed;
+    width: 600px;
+    height: auto;
+    max-height: 500px;
+    left: calc(50vw - 300px);
+    top: 100px;
+    background-color: aliceblue;
+}
+table{
+    width: 90%;
+    margin: 0 auto;
+    table-layout: fixed;
+}
+table td{
+    text-align: center;
+    overflow: hidden;
+}
+table tbody{
+    max-height: 300px;
+    overflow-y: scroll;
+    display:block;
+}
+table thead, tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+table thead th{
+    font-weight: bolder;
+    text-align: center;
+}
