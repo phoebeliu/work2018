@@ -35,7 +35,7 @@
 //             ret.push(exist[target - nums[i]]);
 //             ret.push(i);
 //         }
-        
+
 //         exist[nums[i]] = i;
 //     }
 //     console.log(exist);
@@ -44,7 +44,7 @@
 // var twoSum = function(nums, target) {
 //     var ans = [];
 //     var exist = {};
-    
+
 //     for (var i = 0; i < nums.length; i++){
 //         if (typeof(exist[target-nums[i]]) !== 'undefined'){
 //             return [exist[target - nums[i]], i];
@@ -67,19 +67,40 @@
 //     return result;
 //   }
 
-var twoSum = function(nums, target) {
-    var i,j,results;
-    results = [];
-    for(j=0;j < nums.length;j++){
-        var key = nums.indexOf(target - nums[j]);
-        if(key!==j && key>-1){
-            results.push(key);
-            results.push(j);
-            return results;
-        };
-    };
-};
+// var twoSum = function(nums, target) {
+//     var i,j,results;
+//     results = [];
+//     for(j=0;j < nums.length;j++){
+//         var key = nums.indexOf(target - nums[j]);
+//         if(key!==j && key>-1){
+//             results.push(key);
+//             results.push(j);
+//             return results;
+//         };
+//     };
+// };
 
-var nums = [2, 7, 11, 15],
-     target = 9;
-console.log(twoSum(nums, target));
+// var nums = [2, 7, 11, 15],
+//      target = 9;
+// console.log(twoSum(nums, target));
+var twoSum = function(nums, target) {
+    var returnArray = [];
+    var numSumItem = 0;
+    for (i = 0; i < nums.length; i++) {
+        numSumItem = target - nums[i];
+        for (j = i; j < nums.length; j++) {
+            if (nums[j] == numSumItem && i != j) {
+                returnArray.push(i);
+                returnArray.push(j);
+            }
+        }
+    }
+    return returnArray;
+};
+var dic = {};
+for (var i = 0; i < nums.length; i++) {
+    if (target - nums[i] in dic) {
+        return [dic[target - nums[i]], i];
+    }
+    dic[nums[i]] = i;
+}
