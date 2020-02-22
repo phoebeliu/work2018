@@ -12,7 +12,7 @@
     "devDependencies": {
         "angular-mocks": "1.5.7",
         "del": "^0.1.2",
-        "ecstatic": "~0.5.4",
+        "ecstatic": "~4.1.2",
         "gulp": "^3.8.7",
         "gulp-bump": "^0.1.11",
         "gulp-changed": "^1.0.0",
